@@ -1,0 +1,426 @@
+<title>NBA Live Slate</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: scorer's-table board. Sticky status bar, slate summary, then one card per game that expands into a mini pre-game report. */
+:root{
+  --bg:#f3f4f2; --panel:#ffffff; --ink:#1b2023; --muted:#5c666b; --line:#d9ddd9; --chip:#eceeec;
+  --accent:#b8641a; --home:#1e3f73; --away:#1f7a4a;
+  --ok:#2e7d32; --warn:#a86300; --crit:#b3261e; --live:#c62828;
+  --off-bg:#e4f1e6; --off-fg:#1d5e2a; --inf-bg:#fdf0dc; --inf-fg:#7a4a00; --mkt-bg:#e5ebf6; --mkt-fg:#1e3f73;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121618; --panel:#1a2023; --ink:#e7ebe8; --muted:#9aa6aa; --line:#2c3539; --chip:#242c30;
+  --accent:#e59a4f; --home:#7fa6e8; --away:#4fbf83; --ok:#6cc070; --warn:#e2a64a; --crit:#f07c73; --live:#ff6b6b;
+  --off-bg:#1d3324; --off-fg:#9fdcaa; --inf-bg:#3a2c14; --inf-fg:#f3c77d; --mkt-bg:#1d2840; --mkt-fg:#a9c2f0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121618; --panel:#1a2023; --ink:#e7ebe8; --muted:#9aa6aa; --line:#2c3539; --chip:#242c30;
+  --accent:#e59a4f; --home:#7fa6e8; --away:#4fbf83; --ok:#6cc070; --warn:#e2a64a; --crit:#f07c73; --live:#ff6b6b;
+  --off-bg:#1d3324; --off-fg:#9fdcaa; --inf-bg:#3a2c14; --inf-fg:#f3c77d; --mkt-bg:#1d2840; --mkt-fg:#a9c2f0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--panel)}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:clamp(28px,4.5vw,40px);font-weight:700;line-height:1.05}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:6px;padding:5px 12px;font-size:13px;font-weight:500}
+button:hover{border-color:var(--accent)}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--panel);border-bottom:1px solid var(--line);
+  margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.barin{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--muted);display:inline-block}
+.dot.on{background:var(--live);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.dot.on{animation:none}}
+.nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;font-family:var(--mono);background:var(--chip);white-space:nowrap}
+.pill.crit{background:transparent;border:1px solid var(--crit);color:var(--crit)}
+.pill.warn{background:var(--inf-bg);color:var(--inf-fg)}
+
+.head{display:flex;flex-direction:column;gap:6px;padding-top:18px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:2px}
+.tile b{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.1}
+.banner{border-radius:8px;padding:12px 14px;font-size:14px;border:1px solid var(--warn);background:var(--panel)}
+.banner.crit{border-color:var(--crit)}
+
+[hidden]{display:none!important}
+.grid{display:grid;align-items:start;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;min-width:0}
+.card.live{border-color:var(--live)}
+.card.alerted{box-shadow:inset 4px 0 0 var(--accent)}
+.ctop{padding:14px 16px 10px;display:flex;flex-direction:column;gap:10px}
+.status{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+.st{font-family:var(--mono);font-size:12.5px;font-weight:600}
+.st.in{color:var(--live)}
+.teams{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline}
+.tname{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15;min-width:0}
+.tname small{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}
+.score{font-family:var(--display);font-size:28px;font-weight:700;text-align:right}
+.score.lead{color:var(--accent)}
+.away{color:var(--away)} .home{color:var(--home)}
+.probbar{display:flex;flex-direction:column;gap:4px}
+.track{position:relative;height:12px;border-radius:3px;background:var(--chip);overflow:hidden}
+.track .fill{position:absolute;inset:0 auto 0 0;background:var(--away);opacity:.8}
+.track .rng{position:absolute;top:0;bottom:0;background:transparent;border-inline:2px solid var(--ink)}
+.track .mid{position:absolute;top:-2px;bottom:-2px;width:0;border-left:1px dashed var(--muted);left:50%}
+.plabels{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:12px;flex-wrap:wrap}
+.lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.lines div{background:var(--chip);border-radius:6px;padding:6px 8px;display:flex;flex-direction:column;min-width:0}
+.lines span:first-child{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lines span:last-child{font-family:var(--mono);font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.mv{color:var(--accent)}
+.alerts{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:600;font-family:var(--mono);white-space:nowrap}
+.tag.off{background:var(--off-bg);color:var(--off-fg)}
+.tag.inf{background:var(--inf-bg);color:var(--inf-fg)}
+.tag.mkt{background:var(--mkt-bg);color:var(--mkt-fg)}
+details.more{border-top:1px solid var(--line)}
+details.more>summary{list-style:none;cursor:pointer;padding:10px 16px;font-size:13px;font-weight:600;display:flex;gap:8px;align-items:center}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"+";margin-left:auto;color:var(--accent);font-family:var(--mono)}
+details.more[open]>summary::after{content:"–"}
+.mbody{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mbody h3{font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.inj{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.inj ul{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:3px;font-size:13.5px}
+.s-out{color:var(--crit);font-weight:600} .s-q{color:var(--warn);font-weight:600} .s-p{color:var(--ok);font-weight:600}
+.note{font-size:13px;color:var(--muted)}
+.form{font-family:var(--mono);font-size:13px;letter-spacing:.08em}
+.verdict{font-size:14px;background:var(--chip);border-radius:6px;padding:10px 12px}
+.foot{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+a{color:var(--home)}
+</style>
+
+<div class="bar"><div class="barin">
+  <span class="dot" id="liveDot" aria-hidden="true"></span>
+  <span class="mono" id="barStatus" style="font-size:13px">Connecting to live feed…</span>
+  <span class="pill" id="barNext" hidden></span>
+  <div class="nav">
+    <button id="prevDay" type="button" aria-label="Previous day">◀ Prev</button>
+    <button id="todayBtn" type="button">Today</button>
+    <button id="nextDay" type="button" aria-label="Next day">Next ▶</button>
+    <button id="refreshBtn" type="button">Refresh now</button>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <header class="head">
+    <p class="eyebrow">NBA · live slate · fantasy lineup lock board</p>
+    <h1 id="dayTitle">Today's games</h1>
+    <p class="muted" id="dayNote">Scores, win probability, lines and injury tags for every game on the slate. Scores refresh every 60 s while games are live, every 5 min otherwise. Injury tags refresh every 15 min. The board rolls to the next day at 6 AM ET.</p>
+  </header>
+
+  <div class="tiles" id="tiles">
+    <div class="tile"><span class="eyebrow">Games</span><b id="tGames">–</b></div>
+    <div class="tile"><span class="eyebrow">Live now</span><b id="tLive">–</b></div>
+    <div class="tile"><span class="eyebrow">Final</span><b id="tFinal">–</b></div>
+    <div class="tile"><span class="eyebrow">Next lock</span><b id="tLock">–</b></div>
+    <div class="tile"><span class="eyebrow">Alerts</span><b id="tAlerts">–</b></div>
+  </div>
+
+  <div id="banner" class="banner" hidden></div>
+  <div class="grid" id="grid" aria-live="polite"></div>
+
+  <div class="foot">
+    <p><b>How to read a card.</b> <span class="tag off">REPORTED</span> = team-reported status via ESPN's feed. <span class="tag mkt">MARKET</span> = DraftKings line via ESPN, converted to win chance with the bookmaker margin removed. <span class="tag inf">INFERRED</span> = this board's range: market and ESPN's model blended, widened ±5 points. Live games show ESPN's in-game win probability. Last-5 records are shown for context and labelled as noise.</p>
+    <p><b>Alerts fire on:</b> a spread move of 2+ points from open, a total move of 3+, a moneyline win-chance move of 5+ points, a Questionable/Doubtful/Day-To-Day tag, and tip within 60 minutes (lineup lock). Small line wiggles and G League two-way listings do not alert.</p>
+    <p><b>Market context only, not betting advice.</b> Starters are not shown as official until teams post them, about 30 min before tip.</p>
+    <p>Data: ESPN public scoreboard and game-summary feeds, read through your Firecrawl connector (about 1 credit per refresh; polling pauses while this tab is hidden).</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const SERVER = "Firecrawl", TOOL = "firecrawl_scrape";
+  const SB = d => `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${d.replace(/-/g,"")}`;
+  const SUM = id => `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${id}`;
+  const DEEP = { "401910015": "https://claude.ai/artifact/DVieR5ku865vwmENisQcBU" }; // full pre-game reports
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+  // ---------- dates (ET, roll at 6 AM) ----------
+  const fmtDate = new Intl.DateTimeFormat("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"});
+  const slateToday = () => fmtDate.format(new Date(Date.now() - 6*3600e3));
+  const shift = (d,n) => { const t = new Date(d+"T12:00:00Z"); t.setUTCDate(t.getUTCDate()+n); return t.toISOString().slice(0,10); };
+  const niceDate = d => new Date(d+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric",timeZone:"UTC"});
+  const etTime = iso => new Date(iso).toLocaleTimeString("en-US",{timeZone:"America/New_York",hour:"numeric",minute:"2-digit"})+" ET";
+  const clock = ms => new Date(ms).toLocaleTimeString("en-US",{timeZone:"America/New_York",hour:"numeric",minute:"2-digit",second:"2-digit"});
+
+  let day = slateToday(), followToday = true;
+  let mcp = null, sbUnsub = null, sbInterval = 0;
+  const sumWatches = new Map(); // id -> unsub
+  const summaries = new Map();  // id -> parsed summary
+  let games = [], lastFetch = null;
+
+  // ---------- odds helpers ----------
+  const amer = s => { if (s == null) return null; const n = parseFloat(String(s).replace("+","")); return isFinite(n) && n !== 0 ? n : null; };
+  const imp = a => a == null ? null : (a < 0 ? -a/(-a+100) : 100/(a+100));
+  const noVig = (h,a) => { const ph = imp(h), pa = imp(a); return ph==null||pa==null ? null : ph/(ph+pa); };
+  const num = s => { const n = parseFloat(String(s ?? "").replace(/[ou+]/g,"")); return isFinite(n) ? n : null; };
+  const pct = p => p==null ? "–" : Math.round(p*100)+"%";
+
+  // ---------- payload extraction (Firecrawl → ESPN JSON) ----------
+  function extractJson(result){
+    let p = result && result.payload;
+    if (typeof p === "string") { try { p = JSON.parse(p); } catch {} }
+    let raw = p && typeof p === "object" ? (p.rawHtml || p.html || p.markdown) : (typeof p === "string" ? p : null);
+    if (!raw && result && Array.isArray(result.content)) {
+      for (const b of result.content) if (b.type === "text") {
+        try { const o = JSON.parse(b.text); raw = o.rawHtml || o.html || o.markdown; } catch { raw = b.text; }
+        if (raw) break;
+      }
+    }
+    if (typeof raw !== "string") throw new Error("no body");
+    if (raw.trim().startsWith("<")) raw = new DOMParser().parseFromString(raw,"text/html").body.textContent;
+    const s = raw.indexOf("{"), e = raw.lastIndexOf("}");
+    return JSON.parse(raw.slice(s, e+1));
+  }
+
+  // ---------- model ----------
+  function toGame(ev){
+    const c = ev.competitions[0], st = ev.status.type;
+    const side = h => c.competitors.find(t => t.homeAway === h) || {};
+    const T = t => ({ abbr: t.team?.abbreviation, name: t.team?.shortDisplayName || t.team?.name, id: t.team?.id,
+      score: t.score, rec: (t.records||[])[0]?.summary || "",
+      ppg: (t.leaders||[]).find(l=>l.name==="pointsPerGame")?.leaders?.[0]?.athlete?.shortName });
+    const o = (c.odds||[])[0] || null;
+    let odds = null;
+    if (o) {
+      const ml = o.moneyline || {}, ps = o.pointSpread || {}, tt = o.total || {};
+      odds = {
+        provider: o.provider?.displayName || o.provider?.name || "Book",
+        details: o.details, ou: o.overUnder,
+        spreadOpen: num(ps.home?.open?.line), spreadNow: num(ps.home?.close?.line ?? o.spread),
+        totalOpen: num(tt.over?.open?.line), totalNow: num(tt.over?.close?.line ?? o.overUnder),
+        mlOpen: noVig(amer(ml.home?.open?.odds), amer(ml.away?.open?.odds)),
+        mlNow: noVig(amer(ml.home?.close?.odds), amer(ml.away?.close?.odds)),
+        mlTxt: [ml.away?.close?.odds, ml.home?.close?.odds]
+      };
+    }
+    const lp = c.situation?.lastPlay?.probability;
+    return { id: ev.id, date: ev.date, state: st.state, detail: st.shortDetail, completed: st.completed,
+      away: T(side("away")), home: T(side("home")), odds,
+      liveHome: lp ? lp.homeWinPercentage : null,
+      tv: (c.broadcasts||[]).flatMap(b=>b.names||[]).join(", ") };
+  }
+
+  function rangeFor(g, sum){
+    // returns away-side probability range [lo, hi] and center; INFERRED
+    const mk = g.odds?.mlNow != null ? 1 - g.odds.mlNow : null;
+    const bpiH = sum?.predictor?.homeTeam?.gameProjection;
+    const bpi = bpiH != null ? 1 - parseFloat(bpiH)/100 : null;
+    const pts = [mk, bpi].filter(v => v != null && isFinite(v));
+    if (!pts.length) return null;
+    const lo = Math.max(.01, Math.min(...pts) - .05), hi = Math.min(.99, Math.max(...pts) + .05);
+    return { lo, hi, mk, bpi };
+  }
+
+  function alertsFor(g, sum){
+    const a = [], o = g.odds;
+    if (g.state === "pre") {
+      const mins = (new Date(g.date) - Date.now())/60000;
+      if (mins <= 60 && mins > -5) a.push({t:`Lock in ${Math.max(0,Math.round(mins))} min`, k:"crit"});
+      if (o) {
+        if (o.spreadOpen!=null && o.spreadNow!=null && Math.abs(o.spreadNow-o.spreadOpen) >= 2) a.push({t:`Spread moved ${o.spreadOpen>0?"+":""}${o.spreadOpen} → ${o.spreadNow>0?"+":""}${o.spreadNow}`, k:"warn"});
+        if (o.totalOpen!=null && o.totalNow!=null && Math.abs(o.totalNow-o.totalOpen) >= 3) a.push({t:`Total moved ${o.totalOpen} → ${o.totalNow}`, k:"warn"});
+        if (o.mlOpen!=null && o.mlNow!=null && Math.abs(o.mlNow-o.mlOpen) >= .05) a.push({t:`Win chance moved ${pct(o.mlOpen)} → ${pct(o.mlNow)} (home)`, k:"warn"});
+      }
+      for (const t of (sum?.injuries||[])) for (const i of (t.injuries||[])) {
+        const s = (i.status||"").toLowerCase();
+        if (/questionable|doubtful|day-to-day|game.time/.test(s)) a.push({t:`${t.team?.abbreviation||""} ${i.athlete?.shortName||i.athlete?.displayName}: ${i.status}`, k:"warn"});
+      }
+    }
+    return a;
+  }
+
+  // ---------- render ----------
+  function render(){
+    $("dayTitle").textContent = (day === slateToday() ? "Today · " : "") + niceDate(day);
+    $("todayBtn").disabled = day === slateToday();
+    const live = games.filter(g=>g.state==="in").length, fin = games.filter(g=>g.state==="post").length;
+    $("tGames").textContent = games.length; $("tLive").textContent = live; $("tFinal").textContent = fin;
+    const next = games.filter(g=>g.state==="pre").map(g=>new Date(g.date)).sort((a,b)=>a-b)[0];
+    $("tLock").textContent = next ? etTime(next.toISOString()) : "–";
+    $("liveDot").classList.toggle("on", live > 0);
+    let alertCount = 0;
+    const grid = $("grid");
+    if (!games.length) { grid.innerHTML = lastFetch ? `<p class="muted">No NBA games on this date.</p>` : ""; }
+    const html = games.map(g => {
+      const sum = summaries.get(g.id);
+      const al = alertsFor(g, sum); alertCount += al.length;
+      const aw = Number(g.away.score), hm = Number(g.home.score), showScore = g.state !== "pre";
+      const r = rangeFor(g, sum);
+      let prob = "";
+      if (g.state === "in" && g.liveHome != null) {
+        const pa = 1 - g.liveHome;
+        prob = `<div class="probbar"><div class="track" role="img" aria-label="Live win probability ${esc(g.away.abbr)} ${pct(pa)}"><div class="fill" style="width:${pa*100}%"></div><div class="mid"></div></div>
+          <div class="plabels"><span class="away">${esc(g.away.abbr)} ${pct(pa)}</span><span class="tag inf">LIVE MODEL · ESPN</span><span class="home">${pct(g.liveHome)} ${esc(g.home.abbr)}</span></div></div>`;
+      } else if (g.state === "pre" && r) {
+        const c = (r.lo+r.hi)/2;
+        prob = `<div class="probbar"><div class="track" role="img" aria-label="${esc(g.away.abbr)} win range ${pct(r.lo)} to ${pct(r.hi)}"><div class="fill" style="width:${c*100}%"></div><div class="rng" style="left:${r.lo*100}%;width:${(r.hi-r.lo)*100}%"></div><div class="mid"></div></div>
+          <div class="plabels"><span class="away">${esc(g.away.abbr)} ${pct(r.lo)}–${pct(r.hi)}</span><span class="tag inf">INFERRED RANGE</span><span class="home">${pct(1-r.hi)}–${pct(1-r.lo)} ${esc(g.home.abbr)}</span></div></div>`;
+      }
+      const o = g.odds;
+      const mv = (a,b,f) => a!=null && b!=null && a!==b ? `<span class="mv"> (open ${f(a)})</span>` : "";
+      const sgn = v => (v>0?"+":"")+v;
+      const lines = o ? `<div class="lines">
+          <div><span>Spread (home)</span><span>${o.spreadNow!=null?sgn(o.spreadNow):esc(o.details||"–")}${mv(o.spreadOpen,o.spreadNow,sgn)}</span></div>
+          <div><span>Total</span><span>${o.totalNow ?? o.ou ?? "–"}${mv(o.totalOpen,o.totalNow,x=>x)}</span></div>
+          <div><span>Win chance (no-vig)</span><span>${o.mlNow!=null?`${esc(g.away.abbr)} ${pct(1-o.mlNow)}`:"–"}${o.mlOpen!=null&&o.mlNow!=null&&Math.round(o.mlOpen*100)!==Math.round(o.mlNow*100)?`<span class="mv"> (open ${pct(1-o.mlOpen)})</span>`:""}</span></div>
+        </div>` : (g.state==="pre" ? `<p class="note">No line posted yet.</p>` : "");
+      const alerts = al.length ? `<div class="alerts">${al.map(x=>`<span class="pill ${x.k}">${esc(x.t)}</span>`).join("")}</div>` : "";
+      const deep = DEEP[g.id] ? `<a href="${DEEP[g.id]}" target="_blank" rel="noopener">Full pre-game report ↗</a>` : "";
+      return `<article class="card ${g.state==="in"?"live":""} ${al.length?"alerted":""}" data-id="${g.id}">
+        <div class="ctop">
+          <div class="status"><span class="st ${g.state}">${g.state==="in"?"● LIVE · ":""}${esc(g.state==="pre"?etTime(g.date):g.detail)}</span><span class="muted mono" style="font-size:12px">${esc(g.tv)}</span></div>
+          <div class="teams">
+            <div class="tname away">${esc(g.away.name)}<small>${esc(g.away.rec)}</small></div><div class="score ${showScore&&aw>hm?"lead":""}">${showScore?esc(g.away.score):""}</div>
+            <div class="tname home">@ ${esc(g.home.name)}<small>${esc(g.home.rec)}</small></div><div class="score ${showScore&&hm>aw?"lead":""}">${showScore?esc(g.home.score):""}</div>
+          </div>
+          ${prob}${lines}${alerts}${deep}
+        </div>
+        <details class="more" data-id="${g.id}" ${openSet.has(g.id)?"open":""}><summary>Game report: injuries, model vs market, form</summary><div class="mbody">${detailHtml(g, sum)}</div></details>
+      </article>`;
+    }).join("");
+    if (games.length) grid.innerHTML = html;
+    $("tAlerts").textContent = games.length ? alertCount : "–";
+    grid.querySelectorAll("details.more").forEach(d => d.addEventListener("toggle", () => {
+      if (d.open) { openSet.add(d.dataset.id); watchSummary(d.dataset.id, true); } else openSet.delete(d.dataset.id);
+    }));
+  }
+  const openSet = new Set();
+
+  function detailHtml(g, sum){
+    if (!sum) return `<p class="note">${mcp ? "Loading game report…" : "Needs the live feed."}</p>`;
+    const inj = (sum.injuries||[]).map(t => {
+      const rows = (t.injuries||[]).map(i => {
+        const s = i.status||""; const cls = /out/i.test(s)?"s-out":/question|doubt|day/i.test(s)?"s-q":"s-p";
+        const why = [i.details?.type, i.details?.detail].filter(Boolean).join(" – ");
+        return `<li><span class="${cls}">${esc(s)}</span> ${esc(i.athlete?.displayName)} <span class="muted">${esc(why)}</span></li>`;
+      }).join("") || `<li class="muted">None listed</li>`;
+      return `<div><b>${esc(t.team?.displayName || t.team?.abbreviation)}</b><ul>${rows}</ul></div>`;
+    }).join("");
+    const r = rangeFor(g, sum);
+    const bpiTxt = r?.bpi != null ? `${esc(g.away.abbr)} ${pct(r.bpi)}` : "not posted";
+    const mkTxt = r?.mk != null ? `${esc(g.away.abbr)} ${pct(r.mk)}` : "no line";
+    let read = "";
+    if (r && g.state === "pre") {
+      const fav = (r.lo+r.hi)/2 >= .5 ? g.away.name : g.home.name;
+      const spread = Math.round((r.hi - r.lo)*100);
+      const agree = r.bpi!=null && r.mk!=null ? (Math.abs(r.bpi-r.mk) <= .05 ? "Model and market agree within 5 points." : `Model and market differ by ${Math.round(Math.abs(r.bpi-r.mk)*100)} points, so the range is wider.`) : "Only one source is posted, so treat the range as low confidence.";
+      read = `<p class="verdict"><b>${esc(fav)}</b> lean, ${spread}-point range. ${agree} Confidence: <b>${spread<=12?"Medium":"Low"}</b>. Flip condition: any starter moving to Out, or a 2+ point line move, changes this read.</p>`;
+    }
+    const form = (sum.lastFiveGames||[]).map(t => `<div><b>${esc(t.team?.abbreviation)}</b> <span class="form">${(t.events||[]).map(e=>e.gameResult).join(" ")}</span></div>`).join("");
+    return `${read}
+      <div><h3>Win chance by source</h3><p><span class="tag mkt">MARKET</span> ${mkTxt} · <span class="tag inf">ESPN MODEL</span> ${bpiTxt}${r?` · <span class="tag inf">RANGE</span> ${esc(g.away.abbr)} ${pct(r.lo)}–${pct(r.hi)}`:""}</p></div>
+      <div><h3>Injury report <span class="tag off">REPORTED</span></h3><div class="inj">${inj || `<p class="muted">No injuries listed.</p>`}</div>
+        <p class="note">Questionable or Day-To-Day starters: wait for the status before lock. Starters become official about 30 min before tip.</p></div>
+      ${form ? `<div><h3>Last 5</h3><div class="inj">${form}</div><p class="note">Five games is noise: context only, not a reason to start or sit.</p></div>` : ""}
+      <p class="note">Report refreshed ${clock(sum._at)} ET.</p>`;
+  }
+
+  // ---------- errors ----------
+  function showError(err, where){
+    const code = err?.code || "upstream_error";
+    const msgs = {
+      server_not_connected: "Add the Firecrawl connector in claude.ai Settings → Connectors to load live data.",
+      needs_reauth: "Reconnect Firecrawl in claude.ai Settings → Connectors.",
+      not_in_manifest: "Firecrawl is turned off for this page. Turn it on from the page's Permissions menu.",
+      approval_required: "The live feed needs your approval. Press Refresh now to allow it.",
+      blocked_by_policy: "Your organization blocks this connector, so live data cannot load.",
+      selection_required: "Choose which Firecrawl connector to use in the prompt claude.ai shows.",
+      server_unavailable: "The data feed did not answer. It will retry on the next refresh.",
+      tool_error: "The scoreboard feed returned an error. It will retry on the next refresh."
+    };
+    const b = $("banner");
+    b.hidden = false; b.className = "banner" + (/server_unavailable|tool_error|upstream/.test(code) ? "" : " crit");
+    b.textContent = (msgs[code] || "The live feed hit a problem; showing the last data received.") + (lastFetch ? ` Last good data: ${clock(lastFetch)} ET.` : "");
+    if (where === "sb") $("barStatus").textContent = "Feed error · " + code;
+  }
+
+  // ---------- live feeds ----------
+  const input = url => ({ url, formats: ["rawHtml"], maxAge: 0, objective: "Live NBA slate board: current scores, lines and injury tags." });
+
+  function watchScoreboard(){
+    if (!mcp) return;
+    if (sbUnsub) sbUnsub();
+    const anyLive = games.some(g => g.state === "in");
+    const soon = games.some(g => g.state === "pre" && new Date(g.date) - Date.now() < 30*60000);
+    sbInterval = anyLive || soon ? 60000 : 300000;
+    const thisDay = day;
+    sbUnsub = mcp.watchTool(SERVER, TOOL, input(SB(day)), ev => {
+      if (thisDay !== day) return;
+      if (ev.type === "error") return showError(ev.error, "sb");
+      try {
+        const j = extractJson(ev.result);
+        games = (j.events||[]).map(toGame).sort((a,b) => (a.state==="in"?-1:0)-(b.state==="in"?-1:0) || new Date(a.date)-new Date(b.date));
+        lastFetch = ev.result.cache?.storedAt || Date.now();
+        $("banner").hidden = true;
+        $("barStatus").textContent = `Updated ${clock(lastFetch)} ET · next check in ${sbInterval/60000} min`;
+        try { localStorage.setItem("slate:"+day, JSON.stringify({games, lastFetch})); } catch {}
+        render();
+        for (const g of games) if (g.state === "pre") watchSummary(g.id, false);
+        const wantLive = games.some(g => g.state==="in") || games.some(g => g.state==="pre" && new Date(g.date)-Date.now() < 30*60000);
+        if ((wantLive ? 60000 : 300000) !== sbInterval) setTimeout(watchScoreboard, 0);
+      } catch (e) { showError({code:"tool_error"}, "sb"); }
+    }, { refetchInterval: sbInterval, cache: { staleTime: 25000, gcTime: 900000 } });
+  }
+
+  function watchSummary(id, poll){
+    if (!mcp || sumWatches.has(id)) return;
+    const g = games.find(x => x.id === id);
+    const interval = g && g.state === "pre" ? 900000 : (poll ? 600000 : 900000);
+    const un = mcp.watchTool(SERVER, TOOL, input(SUM(id)), ev => {
+      if (ev.type === "error") { if (/needs_reauth|server_not_connected|not_in_manifest|blocked_by_policy/.test(ev.error?.code)) { summaries.delete(id); render(); } return; }
+      try { const j = extractJson(ev.result); j._at = ev.result.cache?.storedAt || Date.now(); summaries.set(id, j); render(); } catch {}
+    }, { refetchInterval: interval, cache: { staleTime: 120000, gcTime: 1800000 } });
+    sumWatches.set(id, un);
+  }
+
+  function setDay(d, follow){
+    day = d; followToday = follow;
+    games = []; lastFetch = null;
+    for (const un of sumWatches.values()) un(); sumWatches.clear(); summaries.clear(); openSet.clear();
+    try { const c = JSON.parse(localStorage.getItem("slate:"+day) || "null"); if (c) { games = c.games; lastFetch = c.lastFetch; } } catch {}
+    $("grid").innerHTML = games.length ? "" : `<p class="muted">Loading ${esc(niceDate(day))}…</p>`;
+    render(); watchScoreboard();
+  }
+
+  $("prevDay").onclick = () => setDay(shift(day,-1), false);
+  $("nextDay").onclick = () => setDay(shift(day, 1), false);
+  $("todayBtn").onclick = () => setDay(slateToday(), true);
+  $("refreshBtn").onclick = async () => {
+    if (!mcp) return;
+    $("barStatus").textContent = "Refreshing…";
+    try { await mcp.callTool(SERVER, TOOL, input(SB(day)), { cache: { staleTime: 0, gcTime: 900000, refresh: true } }); }
+    catch (e) { showError(e, "sb"); }
+  };
+
+  // roll the board at 6 AM ET and keep lock countdowns current
+  setInterval(() => { if (followToday && slateToday() !== day) setDay(slateToday(), true); else if (games.length) render(); }, 60000);
+
+  // boot: paint cached snapshot, then go live
+  setDay(day, true);
+  (async () => {
+    try { mcp = window.claude && await window.claude.use("mcp"); } catch { mcp = null; }
+    if (!mcp) {
+      const b = $("banner"); b.hidden = false; b.className = "banner crit";
+      b.textContent = "Live data needs this page open in claude.ai with the Firecrawl connector connected." + (lastFetch ? ` Showing the snapshot from ${clock(lastFetch)} ET.` : "");
+      $("barStatus").textContent = "Offline";
+      render(); return;
+    }
+    $("barStatus").textContent = "Loading live slate…";
+    watchScoreboard();
+  })();
+})();
+</script>
