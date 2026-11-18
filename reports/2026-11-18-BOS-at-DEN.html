@@ -1,0 +1,500 @@
+<title>Celtics at Nuggets Pre-Tip Card</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: scorer's-table card. Status strip, then verdict-first blocks 0-3 always visible, 4-13 as expandable drawers. */
+:root{
+  --bg:#f3f4f2; --panel:#ffffff; --ink:#1b2023; --muted:#5c666b; --line:#d9ddd9;
+  --accent:#b8641a;          /* shot-clock amber */
+  --bos:#1f7a4a; --den:#1e3f73; --den2:#b88a12;
+  --ok:#2e7d32; --warn:#a86300; --crit:#b3261e;
+  --off-bg:#e4f1e6; --off-fg:#1d5e2a; --inf-bg:#fdf0dc; --inf-fg:#7a4a00;
+  --chip:#eceeec;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121618; --panel:#1a2023; --ink:#e7ebe8; --muted:#9aa6aa; --line:#2c3539;
+  --accent:#e59a4f; --bos:#4fbf83; --den:#7fa6e8; --den2:#e0b443;
+  --ok:#6cc070; --warn:#e2a64a; --crit:#f07c73;
+  --off-bg:#1d3324; --off-fg:#9fdcaa; --inf-bg:#3a2c14; --inf-fg:#f3c77d; --chip:#242c30; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121618; --panel:#1a2023; --ink:#e7ebe8; --muted:#9aa6aa; --line:#2c3539;
+  --accent:#e59a4f; --bos:#4fbf83; --den:#7fa6e8; --den2:#e0b443;
+  --ok:#6cc070; --warn:#e2a64a; --crit:#f07c73;
+  --off-bg:#1d3324; --off-fg:#9fdcaa; --inf-bg:#3a2c14; --inf-fg:#f3c77d; --chip:#242c30; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(30px,5vw,44px);font-weight:700;line-height:1.05}
+h2{font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+h3{font-size:18px;font-weight:600}
+p{margin:0}
+.mono{font-family:var(--mono);font-size:.86em;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.secnum{font-family:var(--mono);color:var(--accent);font-weight:600;margin-right:6px}
+
+/* status strip */
+.strip{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;font-family:var(--mono);letter-spacing:.02em;background:var(--chip);color:var(--ink);white-space:nowrap}
+.pill.draft{background:var(--inf-bg);color:var(--inf-fg)}
+.pill.stale{white-space:normal;background:transparent;border:1px solid var(--crit);color:var(--crit)}
+.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:600;font-family:var(--mono);letter-spacing:.03em;white-space:nowrap}
+.tag.off{background:var(--off-bg);color:var(--off-fg)}
+.tag.inf{background:var(--inf-bg);color:var(--inf-fg)}
+.tag.gap{background:transparent;border:1px dashed var(--crit);color:var(--crit)}
+.conf{font-family:var(--mono);font-size:11px;font-weight:600;white-space:nowrap}
+.c-hi{color:var(--ok)} .c-md{color:var(--warn)} .c-lo{color:var(--crit)}
+
+.matchup{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:baseline}
+.team{font-family:var(--display);font-size:22px;font-weight:600}
+.bos{color:var(--bos)} .den{color:var(--den)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 18px}
+.meta div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.meta b{font-weight:600}
+
+/* verdict */
+.verdict{border-color:var(--accent);border-width:2px}
+.vgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px}
+@media (max-width:760px){.vgrid{grid-template-columns:1fr}}
+.prob{display:flex;flex-direction:column;gap:10px}
+.prob .big{font-family:var(--display);font-size:clamp(32px,6vw,46px);font-weight:700;line-height:1}
+.prob .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.takeaway{font-size:17px;line-height:1.5}
+.takeaway strong{font-weight:600}
+
+/* chart */
+.chart{width:100%;max-width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--mono);font-size:11px}
+.chart .lbl{fill:var(--ink);font-weight:600}
+
+/* factors */
+.factors{display:grid;gap:12px}
+.factor{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.factor:first-child{border-top:0;padding-top:0}
+.rank{font-family:var(--display);font-size:34px;font-weight:700;color:var(--accent);line-height:1}
+.factor dl{display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 12px;margin:6px 0 0}
+.factor dt{font-size:12px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.factor dd{margin:0}
+@media (max-width:560px){.factor dl{grid-template-columns:1fr}.factor dt{margin-top:6px}}
+
+.flip{border-left:4px solid var(--crit);padding-left:14px;display:flex;flex-direction:column;gap:8px}
+
+/* drawers */
+details.panel{padding:0}
+details>summary{cursor:pointer;list-style:none;padding:16px 20px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:"+";margin-left:auto;font-family:var(--mono);color:var(--accent);font-weight:600}
+details[open]>summary::after{content:"–"}
+details>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.sumline{color:var(--muted);font-size:14px;flex:1 1 320px;min-width:0}
+.dbody{padding:0 20px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--chip);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);white-space:nowrap}
+.note{font-size:13.5px;color:var(--muted)}
+.callout{background:var(--chip);border-radius:8px;padding:12px 14px;font-size:14px}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.scen>div{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.two>div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.disclaimer{border:1px solid var(--warn);border-radius:8px;padding:10px 14px;font-size:13.5px}
+footer{display:flex;flex-direction:column;gap:10px}
+.nextup{font-family:var(--mono);font-weight:600;font-size:14px;border-top:2px solid var(--accent);padding-top:12px}
+a{color:var(--den)} a:focus-visible{outline:2px solid var(--accent)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+
+<!-- ============ 0. REPORT HEADER ============ -->
+<section class="panel" aria-labelledby="s0">
+  <div class="strip">
+    <span class="pill draft">STATUS: DRAFT</span>
+    <span class="pill">T−25h</span>
+    <span class="pill stale">Stale at 1:30 PM ET Wed · worthless after tip</span>
+  </div>
+  <p class="eyebrow"><span class="secnum">0</span>Report header · NBA regular season 2026-27 · Game 15 (BOS) / 13 (DEN)</p>
+  <h1 id="s0"><span class="bos">Boston Celtics</span> at <span class="den">Denver Nuggets</span></h1>
+  <div class="meta">
+    <div><span class="eyebrow">Tip-off</span><b class="mono">Wed 18 Nov 2026 · 9:30 PM ET (7:30 PM MT)</b><span class="muted">Ball Arena, Denver · ESPN</span></div>
+    <div><span class="eyebrow">Last updated</span><b class="mono">Tue 17 Nov 2026 · 8:25 PM ET</b><span class="muted">Based on official injury report of 8:00 PM ET</span></div>
+    <div><span class="eyebrow">Records (Official)</span><b class="mono">BOS 11-3 · DEN 7-5</b><span class="muted">Basketball-Reference, rev. 17 Nov 04:59 UTC</span></div>
+    <div><span class="eyebrow">Report deadline</span><b class="mono">8:30 PM ET Wed (T−60)</b><span class="muted">Not supplied; chosen. Starters re-checked at T−30.</span></div>
+  </div>
+  <div class="callout"><b>Built for:</b> a fantasy manager (daily or season-long) deciding <b>which Celtics and Nuggets to start before lineup lock at 9:30 PM ET</b>. The target user was not supplied. I chose fantasy because this game's real uncertainty is minutes and starting roles, not the winner. Every section is cut to that one decision.</div>
+  <p class="note"><b>Staleness warning:</b> this draft is 25 hours before tip. Shootaround news, the 1:30 PM and 5:30 PM ET official reports, and the posted starters (about 9:00 PM ET) can change Sections 4–6. Do not lock a lineup from this version. The FINAL PRE-TIP issue is due at 8:30 PM ET Wednesday.</p>
+</section>
+
+<!-- ============ 1. VERDICT ============ -->
+<section class="panel verdict" aria-labelledby="s1">
+  <p class="eyebrow"><span class="secnum">1</span>Verdict</p>
+  <div class="vgrid">
+    <div class="prob">
+      <h2 id="s1">Win probability range</h2>
+      <div class="row">
+        <div><div class="big bos">50–60%</div><div class="muted">Celtics</div></div>
+        <div style="text-align:right"><div class="big den">40–50%</div><div class="muted">Nuggets</div></div>
+      </div>
+      <!-- Chart: 0-100 scale, x = 20 + p*6.6 (660px track) -->
+      <svg class="chart" viewBox="0 0 700 96" role="img" aria-label="Celtics win probability: this report 50 to 60 percent; DraftKings no-vig 56.2 percent; Kalshi 57 percent">
+        <rect x="20" y="30" width="660" height="18" rx="3" fill="var(--chip)"/>
+        <rect x="350" y="30" width="66" height="18" fill="var(--bos)" opacity=".85"/>
+        <line x1="350" y1="22" x2="350" y2="56" stroke="var(--muted)" stroke-dasharray="3 3"/>
+        <line x1="390.9" y1="24" x2="390.9" y2="54" stroke="var(--ink)" stroke-width="2.5"/>
+        <line x1="396.2" y1="24" x2="396.2" y2="54" stroke="var(--accent)" stroke-width="2.5"/>
+        <text x="20" y="72">0%</text><text x="343" y="72">50%</text><text x="660" y="72">100%</text>
+        <text class="lbl" x="352" y="16">Report range 50–60%</text>
+        <rect x="20" y="82" width="10" height="3" fill="var(--ink)"/><text x="36" y="88">DraftKings no-vig 56.2%</text><rect x="210" y="82" width="10" height="3" fill="var(--accent)"/><text x="226" y="88">Kalshi 57%</text><rect x="330" y="80" width="10" height="7" fill="var(--bos)" opacity=".85"/><text x="346" y="88">Report range (Celtics side)</text>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+      <p class="takeaway"><strong>Start Jokić and Murray without hesitation; start Tatum, George and White.</strong> Hold Boston's center and fifth-starter spots (Queta, Walsh, Robinson, Garza) until starters post near 9:00 PM ET. Expect a slow, low-possession game, so trim upside for secondary scorers.</p>
+      <p><span class="conf c-md">CONFIDENCE IN VERDICT: MEDIUM</span> <span class="muted">· Nobody is Questionable, but both teams' ratings rest on 12–14 games, and Boston has used eight starting lineups in 14.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. THREE DECISIVE FACTORS ============ -->
+<section class="panel" aria-labelledby="s2">
+  <p class="eyebrow"><span class="secnum">2</span>The three decisive factors</p>
+  <h2 id="s2">What decides this game, ranked</h2>
+  <div class="factors">
+    <div class="factor">
+      <div class="rank">1</div>
+      <div>
+        <h3>Jokić against Boston's rotating center spot</h3>
+        <dl>
+          <dt>Why it matters</dt><dd>Denver's offense is Jokić. Boston has no settled answer at center: Robinson started 5 games, Queta 8, Garza 2. Whoever guards Jokić carries foul risk, and that sets Boston's big-man minutes.</dd>
+          <dt>Evidence</dt><dd>Jokić: 24.1 pts, 10.9 reb, 8.9 ast in 36.6 min (12 GP). Robinson picked up 5 fouls in 17:44 on 16 Nov. Queta sat 16 Nov (rest, second night of a back-to-back).</dd>
+          <dt>Status</dt><dd><span class="tag off">OFFICIAL</span> stats and starts · <span class="tag inf">INFERRED</span> tonight's Boston center <span class="conf c-md">MED</span></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="factor">
+      <div class="rank">2</div>
+      <div>
+        <h3>Boston's three-point volume against Denver's 20th-ranked defense</h3>
+        <dl>
+          <dt>Why it matters</dt><dd>Boston wins on shot volume and second chances, not accuracy. If the threes fall, Denver's defense cannot keep pace. If they don't, a 2.5-point game turns.</dd>
+          <dt>Evidence</dt><dd>3PA rate: BOS .500 (3rd) vs DEN .364 (28th). Def rating: BOS 107.8 (3rd) vs DEN 116.0 (20th). Off. rebound %: BOS 30.0 (7th) vs DEN 24.4 (24th). Boston's team 3P% is only about 33%, so variance is high.</dd>
+          <dt>Status</dt><dd><span class="tag off">OFFICIAL</span> season stats (small sample: 14 and 12 games) <span class="conf c-md">MED</span></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="factor">
+      <div class="rank">3</div>
+      <div>
+        <h3>Denver's top-heavy minutes against Boston's bench</h3>
+        <dl>
+          <dt>Why it matters</dt><dd>The minutes Jokić sits are Boston's best window. For fantasy, Denver starters have a high minutes floor, and Pritchard is the bench piece with a real role.</dd>
+          <dt>Evidence</dt><dd>Jokić 36.6, Murray 36.4 and Braun 33.8 min per game. On 16 Nov, Denver's bench was −15 (DeRozan, 14 min) and −17 (Bagley, 10 min). Pritchard: 27.1 min and 13.6 pts off the bench. Hauser shoots .465 from three.</dd>
+          <dt>Status</dt><dd><span class="tag off">OFFICIAL</span> box scores · <span class="tag inf">INFERRED</span> that the pattern repeats <span class="conf c-md">MED</span></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. WHAT WOULD FLIP IT ============ -->
+<section class="panel" aria-labelledby="s3">
+  <p class="eyebrow"><span class="secnum">3</span>What would flip it</p>
+  <h2 id="s3">Flip condition</h2>
+  <div class="flip">
+    <p><b>Primary flip: Paul George or Jayson Tatum ruled out</b> (not on the 8:00 PM ET report; George has missed 2 of 14 games, and Boston opens a four-game road trip at altitude).<br>
+    → Verdict becomes <b class="den">Nuggets 50–58%</b>. For fantasy, Pritchard moves into the starting five (projected 32–36 min), and Hauser and Scheierman each gain 4–6 min.</p>
+    <p><b>Largest-magnitude flip: Jokić downgraded</b> (no sign of it; listed nowhere). → <b class="bos">Celtics 68–78%</b>. Murray's usage rises, and Brazile and Bagley start or absorb about 30 min combined.</p>
+    <p><b>Market trigger:</b> the line moves to Denver favored (Nuggets −1 or shorter) with no injury news. → Reissue and re-examine. That would mean the market knows something this report does not.</p>
+  </div>
+</section>
+
+<p class="eyebrow" style="padding:4px 2px 0">Detail · expand as needed</p>
+
+<!-- ============ 4. INJURY REPORT ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">4</span>Injury report</h2><span class="sumline">Official report 8:00 PM ET Tue: six players Out, none in either rotation. No Questionable or GTD tags.</span></summary>
+  <div class="dbody">
+    <h3>Official <span class="tag off">OFFICIAL</span></h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Player</th><th>Team</th><th>Official status</th><th>Source + timestamp</th><th>Impact if plays / sits</th><th>Confidence</th></tr></thead>
+      <tbody>
+        <tr><td>Julian Strawther</td><td>DEN</td><td>Out: left knee sprain</td><td class="num">NBA injury report · 17 Nov 8:00 PM ET</td><td>Already priced in. Out since about 16 Oct (six-week timeline per team). No change to rotation.</td><td><span class="conf c-hi">HIGH</span></td></tr>
+        <tr><td>Cam Whitmore</td><td>DEN</td><td>Out: G League, two-way</td><td class="num">NBA injury report · 17 Nov 8:00 PM ET</td><td>None. 2 GP, 7.5 min.</td><td><span class="conf c-hi">HIGH</span></td></tr>
+        <tr><td>Ryan Nembhard</td><td>DEN</td><td>Out: G League, two-way</td><td class="num">NBA injury report · 17 Nov 8:00 PM ET</td><td>None. Third-string PG.</td><td><span class="conf c-hi">HIGH</span></td></tr>
+        <tr><td>DaRon Holmes II</td><td>DEN</td><td>Out: G League assignment</td><td class="num">NBA injury report · 17 Nov 8:00 PM ET</td><td>None.</td><td><span class="conf c-hi">HIGH</span></td></tr>
+        <tr><td>Dillon Mitchell</td><td>BOS</td><td>Out: G League, two-way</td><td class="num">NBA injury report · 17 Nov 8:00 PM ET</td><td>None.</td><td><span class="conf c-hi">HIGH</span></td></tr>
+        <tr><td>Amari Williams</td><td>BOS</td><td>Out: G League, two-way</td><td class="num">NBA injury report · 17 Nov 8:00 PM ET</td><td>None.</td><td><span class="conf c-hi">HIGH</span></td></tr>
+      </tbody>
+    </table></div>
+    <h3>Inferred watch list <span class="tag inf">INFERRED</span></h3>
+    <p class="note">None of these players is listed. They are here because a recent signal makes their status less than certain. None is presented as an official status.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Player</th><th>Team</th><th>Signal</th><th>Source + timestamp</th><th>Impact if plays / sits</th><th>Confidence plays</th></tr></thead>
+      <tbody>
+        <tr><td>Neemias Queta</td><td>BOS</td><td>Inactive 16 Nov ("Out, rest," second night of a back-to-back). Not listed for 18 Nov.</td><td class="num">Basketball-Reference box score + notes · 17 Nov 05:04 UTC</td><td>Plays: starts at C, 20–27 min. Sits: Garza or Robinson starts; Robinson 20–26 min with high foul risk.</td><td><span class="conf c-hi">~90%</span></td></tr>
+        <tr><td>Paul George</td><td>BOS</td><td>Missed 2 of 14 games. Age 36. Road-trip opener at altitude.</td><td class="num">BBRef per-game (12 GP / 14) · 17 Nov 04:59 UTC</td><td>Plays: 29–35 min. Sits: see flip condition (Section 3).</td><td><span class="conf c-hi">~92%</span></td></tr>
+        <tr><td>Cameron Johnson</td><td>DEN</td><td>Missed 3 games (24, 26, 28 Oct); reason not captured. Started 9 straight since.</td><td class="num">BBRef starting lineups · 17 Nov 04:59 UTC</td><td>Plays: 25–31 min. Sits: Hopkins or Brazile starts; Brazile +6 min.</td><td><span class="conf c-hi">~95%</span></td></tr>
+        <tr><td>Devin Carter</td><td>BOS</td><td>Inactive 16 Nov; 1 GP all season; not listed.</td><td class="num">BBRef box score · 17 Nov 05:04 UTC</td><td>Outside rotation either way. No fantasy relevance.</td><td><span class="conf c-lo">LOW</span></td></tr>
+      </tbody>
+    </table></div>
+    <h3>Scenario A / B for the one real status question</h3>
+    <p class="note">The official report has no Questionable or GTD players, so the required A/B is applied to the highest-risk inferred case: Boston's center.</p>
+    <div class="scen">
+      <div><b>Scenario A: Queta plays (≈90%)</b><span>Queta starts, 20–27 min. Robinson 12–18. Garza 4–10. Walsh keeps the fifth spot.</span><span class="muted">Fantasy: Queta is a usable cheap rebounds/blocks play only after the starter post. Garza is a sit.</span></div>
+      <div><b>Scenario B: Queta sits (≈10%)</b><span>Garza (as on 16 Nov) or Robinson starts. Robinson 20–26 min with a 5-foul risk against Jokić. Garza 14–20.</span><span class="muted">Fantasy: Robinson for rebounds only. Jokić's ceiling rises against a foul-limited big.</span></div>
+    </div>
+  </div>
+</details>
+
+<!-- ============ 5. LINEUPS & MINUTES ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">5</span>Projected starters and minutes</h2><span class="sumline">Denver: same five for 9 straight games. Boston: three stars set, center and fifth spot uncertain.</span></summary>
+  <div class="dbody">
+    <p class="callout">No starters are official until teams post them, about 30 minutes before tip. <b>Every starter below is <span class="tag inf">INFERRED</span>.</b> Minute ranges come from season minutes per game and the most recent game, adjusted for role. They are estimates, not team data.</p>
+    <h3 class="bos">Boston Celtics (coach Joe Mazzulla)</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Player</th><th>Off/Inf</th><th>Source + timestamp</th><th>Confidence</th><th>Proj. min</th><th>Driver signal / what proves it wrong</th><th>Alternate if status changes</th></tr></thead>
+      <tbody>
+        <tr><td><b>Derrick White</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts · 17 Nov 04:59 UTC</td><td><span class="conf c-hi">97%</span></td><td class="num">29–34</td><td>Started 14 of 14. Wrong only with a late injury.</td><td>Pritchard starts</td></tr>
+        <tr><td><b>Jayson Tatum</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts · 17 Nov</td><td><span class="conf c-hi">95%</span></td><td class="num">33–38</td><td>13 of 13 when available; 36:03 on 16 Nov.</td><td>Scheierman starts; Pritchard to 34+</td></tr>
+        <tr><td><b>Paul George</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts · 17 Nov</td><td><span class="conf c-hi">92%</span></td><td class="num">29–35</td><td>12 of 12 when available. Rest risk (Section 4).</td><td>Hauser or Scheierman starts</td></tr>
+        <tr><td><b>Jordan Walsh</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts + Celtics Wire projection · 17 Nov 1:48 PM ET</td><td><span class="conf c-md">60%</span></td><td class="num">14–22</td><td>9 starts, including 3 of the last 4. Wrong if Mazzulla goes big (Robinson with Queta) or shooting (Hauser or Scheierman).</td><td>Scheierman / Hauser / González</td></tr>
+        <tr><td><b>Neemias Queta</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts + Celtics Wire · 17 Nov</td><td><span class="conf c-md">65%</span></td><td class="num">20–27</td><td>Started all 8 games he played from 1 Nov on. Rested 16 Nov, so fresh tonight. Wrong if Robinson's size against Jokić wins out.</td><td>Robinson (likelier) or Garza</td></tr>
+        <tr><td>Payton Pritchard</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-hi">HIGH</span></td><td class="num">25–32</td><td>27.1 min per game; 31:40 on 16 Nov.</td><td>Starts if any guard or wing is out</td></tr>
+        <tr><td>Sam Hauser</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-md">MED</span></td><td class="num">17–25</td><td>20.6 min per game; .465 from three.</td><td>—</td></tr>
+        <tr><td>Baylor Scheierman</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-md">MED</span></td><td class="num">12–20</td><td>19.9 min per game; 4 fouls in 11 min on 16 Nov.</td><td>—</td></tr>
+        <tr><td>Mitchell Robinson</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-md">MED</span></td><td class="num">12–20</td><td>17.6 min per game; foul-limited against Jokić.</td><td>Starts if Queta sits</td></tr>
+        <tr><td>Luka Garza</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-lo">LOW</span></td><td class="num">4–12</td><td>Started only when Queta was unavailable.</td><td>14–20 if Queta sits</td></tr>
+      </tbody>
+    </table></div>
+    <h3 class="den">Denver Nuggets (coach David Adelman)</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Player</th><th>Off/Inf</th><th>Source + timestamp</th><th>Confidence</th><th>Proj. min</th><th>Driver signal / what proves it wrong</th><th>Alternate if status changes</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jamal Murray</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts · 17 Nov 04:59 UTC</td><td><span class="conf c-hi">97%</span></td><td class="num">34–39</td><td>12 of 12; 36.4 min per game; 26.1 pts, .471 from three.</td><td>T. Jones starts</td></tr>
+        <tr><td><b>Christian Braun</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts</td><td><span class="conf c-hi">97%</span></td><td class="num">31–36</td><td>12 of 12.</td><td>S. Jones starts</td></tr>
+        <tr><td><b>Cameron Johnson</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts + Celtics Wire</td><td><span class="conf c-hi">93%</span></td><td class="num">25–31</td><td>9 straight starts. 5 fouls on 16 Nov, so foul risk caps him.</td><td>Hopkins or Brazile</td></tr>
+        <tr><td><b>Aaron Gordon</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts</td><td><span class="conf c-hi">95%</span></td><td class="num">24–31</td><td>12 of 12. Only 24:12 on 16 Nov; Brazile has been taking some of his minutes.</td><td>Brazile</td></tr>
+        <tr><td><b>Nikola Jokić</b></td><td><span class="tag inf">INF</span></td><td class="num">BBRef starts</td><td><span class="conf c-hi">98%</span></td><td class="num">35–39</td><td>12 of 12; 38:00 on 16 Nov.</td><td>Bagley or Brazile at C (see flip)</td></tr>
+        <tr><td>DeMar DeRozan</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-md">MED</span></td><td class="num">16–24</td><td>22.7 min per game; −15 in 14 min on 16 Nov.</td><td>—</td></tr>
+        <tr><td>Trevon Brazile</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-md">MED</span></td><td class="num">16–23</td><td>19.5 min per game; 23:12 on 16 Nov.</td><td>Starts if Gordon or Johnson is out</td></tr>
+        <tr><td>Spencer Jones</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-md">MED</span></td><td class="num">12–21</td><td>17.8 min per game in 5 GP; 21:22 on 16 Nov.</td><td>—</td></tr>
+        <tr><td>Bagley / T. Jones</td><td><span class="tag inf">INF</span> bench</td><td class="num">BBRef per-game</td><td><span class="conf c-lo">LOW</span></td><td class="num">6–12 each</td><td>Backup C and PG minutes.</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <div class="two">
+      <div><h3>Expected starter accuracy</h3><p>Denver: about 90% chance all five are right. Boston: about 80% per starter, and only about 40% that all five are right, because the center and fifth spots are near coin flips between two or three names. Across 10 starters, I expect 8–9 correct. That is why the verdict says to hold Boston's frontcourt until the starters post.</p></div>
+      <div><h3>What breaks the minute ranges</h3><ul>
+        <li><b>Foul trouble:</b> every Boston center against Jokić (Robinson had 5 fouls in 17 min on 16 Nov). Cam Johnson (5 fouls on 16 Nov) against Tatum.</li>
+        <li><b>Blowout risk: low.</b> With a 2.5-point spread, I estimate about a 12% chance the margin reaches 15+. That would cut starters to 28–32 min.</li>
+        <li><b>Overtime:</b> about a 6% chance in a near pick'em. It adds about 5 min to every starter.</li>
+      </ul></div>
+    </div>
+  </div>
+</details>
+
+<!-- ============ 6. MATCHUPS ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">6</span>Defensive matchup assignments</h2><span class="sumline">Likely starting assignments, not a fixed chart. Boston will switch; Jokić's defender is the assignment most likely to change.</span></summary>
+  <div class="dbody">
+    <p class="callout">Every assignment below is <span class="tag inf">INFERRED</span> from personnel and coaching habits. No tracking data was available for this report (gap: NBA.com matchup data was not pulled). <b>⟳</b> marks assignments likely to change after the first timeout or on switches.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Offensive player</th><th>Likely primary defender</th><th>Scheme</th><th>Switch likelihood</th><th>Expected adjustment</th><th>Conf.</th></tr></thead>
+      <tbody>
+        <tr><td class="den"><b>Nikola Jokić</b></td><td>Queta (or Robinson) ⟳</td><td>Big stays home; light help from the nail; no hard doubles early</td><td>High (1–4 switch; the big stays on Jokić)</td><td>If the center gets 2 early fouls, Mazzulla likely moves a forward (Walsh or George) onto Jokić and lets the big roam on Gordon or Braun.</td><td><span class="conf c-lo">LOW</span></td></tr>
+        <tr><td class="den"><b>Jamal Murray</b></td><td>Derrick White ⟳</td><td>Switch on Murray–Jokić pick-and-roll; chase through screens off the ball</td><td>High</td><td>Denver forces the switch to get Murray onto Pritchard or the Boston center.</td><td><span class="conf c-md">MED</span></td></tr>
+        <tr><td class="den">Cameron Johnson</td><td>Paul George</td><td>Stay attached to the shooter on the weak side</td><td>Medium</td><td>Switches with Walsh in handoffs.</td><td><span class="conf c-md">MED</span></td></tr>
+        <tr><td class="den">Aaron Gordon</td><td>Walsh or Tatum ⟳</td><td>Help-and-recover; Gordon is left open at the arc (3P .298)</td><td>Medium</td><td>Boston sags off Gordon to crowd Jokić.</td><td><span class="conf c-md">MED</span></td></tr>
+        <tr><td class="bos"><b>Jayson Tatum</b></td><td>Aaron Gordon ⟳</td><td>Denver: Jokić in drop or at the level; help from the strong side</td><td>Medium</td><td>Boston screens with Gordon's man to get Tatum onto Johnson or DeRozan.</td><td><span class="conf c-md">MED</span></td></tr>
+        <tr><td class="bos"><b>Paul George</b></td><td>Christian Braun</td><td>Stay attached; switch on off-ball screens</td><td>Medium</td><td>George attacks DeRozan in bench minutes.</td><td><span class="conf c-md">MED</span></td></tr>
+        <tr><td class="bos">Derrick White</td><td>Cameron Johnson / Murray ⟳</td><td>Cross-match in transition</td><td>High</td><td>Murray is hidden on the least dangerous Boston guard when possible.</td><td><span class="conf c-lo">LOW</span></td></tr>
+        <tr><td class="bos">Payton Pritchard</td><td>Murray or Tyus Jones</td><td>Chase over screens</td><td>High</td><td>—</td><td><span class="conf c-md">MED</span></td></tr>
+      </tbody>
+    </table></div>
+    <div class="two">
+      <div><h3 class="den">Mismatch Denver will hunt</h3><p>Pritchard on switches. Denver will screen to put him on Gordon or Johnson in the post, or on Jokić in a handoff. Denver will also pull Boston's center 25 feet from the rim with Jokić at the elbow.</p></div>
+      <div><h3 class="bos">Mismatch Boston will hunt</h3><p>Jokić in space. Boston will spread the floor with five shooters and run Jokić's man into pick-and-rolls. Boston will also target DeRozan and Bagley when Jokić sits.</p></div>
+    </div>
+  </div>
+</details>
+
+<!-- ============ 7. STYLE CLASH ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">7</span>Style clash</h2><span class="sumline">Two of the five slowest teams. Boston controls shot volume; Denver controls shot quality near the rim.</span></summary>
+  <div class="dbody">
+    <div class="tablewrap"><table>
+      <thead><tr><th>Dimension</th><th class="bos">BOS</th><th class="den">DEN</th><th>Edge</th><th>Why it matters for fantasy</th></tr></thead>
+      <tbody>
+        <tr><td>Pace (poss./48)</td><td class="num">95.1 (30th)</td><td class="num">96.7 (26th)</td><td>Neither</td><td>Fewer possessions: trim secondary scorers. Total of 219.5 to 220.5.</td></tr>
+        <tr><td>Offensive rating</td><td class="num">119.9 (5th)</td><td class="num">116.7 (8th)</td><td>BOS, slight</td><td>Both offenses are efficient, so stars keep their floor.</td></tr>
+        <tr><td>Defensive rating</td><td class="num">107.8 (3rd)</td><td class="num">116.0 (20th)</td><td>BOS, clear</td><td>Boston scorers have the better matchup.</td></tr>
+        <tr><td>3PA rate</td><td class="num">.500 (3rd)</td><td class="num">.364 (28th)</td><td>BOS volume</td><td>Hauser and Pritchard threes are the swing outcome.</td></tr>
+        <tr><td>FT rate</td><td class="num">.258 (24th)</td><td class="num">.304 (8th)</td><td>DEN</td><td>Jokić and Murray points from the line; Boston bigs in foul trouble.</td></tr>
+        <tr><td>Off. rebound %</td><td class="num">30.0 (7th)</td><td class="num">24.4 (24th)</td><td>BOS</td><td>Queta and Robinson rebounds are the only reason to play them.</td></tr>
+        <tr><td>Turnover %</td><td class="num">12.8 (11th)</td><td class="num">12.5 (7th)</td><td>Even</td><td>Few transition chances. No steals boost.</td></tr>
+        <tr><td>Team FG%</td><td class="num">42.6%</td><td class="num">48.7%</td><td>DEN</td><td>Denver takes better shots. Boston makes it up with volume.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Ratings and ranks: <span class="tag off">OFFICIAL</span>-derived (Basketball-Reference, rev. 17 Nov 04:59 UTC). FG%: Statz preview (captured 17 Nov about 8:20 PM ET). Lineup-against-lineup net ratings: <span class="tag gap">GAP</span>, no licensed lineup data, so none are claimed.</p>
+    <p><b>Who controls tempo:</b> neither team runs. The game should play out in the half court around 95 possessions. Boston controls <i>shot profile</i>: it takes threes and rebounds its misses. Denver controls <i>shot quality</i>: Jokić's post and elbow touches produce high-percentage twos and free throws. Bench depth tilts toward Boston: Pritchard, Hauser and Scheierman are productive, while Denver's non-starters are thin.</p>
+  </div>
+</details>
+
+<!-- ============ 8. FORM ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">8</span>Form, streaks and context</h2><span class="sumline">Both last played Monday and have one day of rest. Last-5 records, home/away splits and head-to-head are mostly noise.</span></summary>
+  <div class="dbody">
+    <div class="tablewrap"><table>
+      <thead><tr><th>Claim</th><th>Sample</th><th>Opponent / context</th><th>Signal or noise</th></tr></thead>
+      <tbody>
+        <tr><td>Boston last 5: 4-1 (W TOR 98-93, W PHI 123-101, W MIL 117-97, W DAL 131-94, L ORL 105-115)</td><td class="num">5 games</td><td>Toronto was missing Barnes; Boston came back from 22 down. Four of five were against teams below the top tier.</td><td><b>Noise.</b> Do not weight it.</td></tr>
+        <tr><td>Denver last 5: 3-2 (W IND, L HOU, W MEM, W NOP, L PHX)</td><td class="num">5 games</td><td>Four of five on the road; lost at home Monday.</td><td><b>Noise.</b></td></tr>
+        <tr><td>Boston net rating +12.0 (2nd)</td><td class="num">14 games</td><td>Includes CHA, CHI ×2, BKN, DAL. Schedule-adjusted figure not captured (<span class="tag gap">GAP</span>).</td><td><b>Moderate signal,</b> heavily regressed in the 50–60% range.</td></tr>
+        <tr><td>Denver net rating +0.7 (16th)</td><td class="num">12 games</td><td>The usual starting five is 5-4 in its 9 starts. The bench drags the number down.</td><td><b>Moderate signal</b> about the bench, not the starters.</td></tr>
+        <tr><td>Denver 2-3 at home, 5-2 on the road</td><td class="num">5 / 7 games</td><td>Reversed from Denver's long-run home strength.</td><td><b>Noise.</b> I still apply normal home court plus altitude (about 2.5 to 3 points).</td></tr>
+        <tr><td>Boston 6-1 home, 5-2 road</td><td class="num">7 / 7 games</td><td>—</td><td><b>Noise.</b></td></tr>
+        <tr><td>Head-to-head: Denver won 4 of the last 6 (2024 to Feb 2026)</td><td class="num">6 games, 3 seasons</td><td>Different rosters (George, C. Johnson and DeRozan are new to these matchups) and Denver has a new coach.</td><td><b>Noise.</b> Discarded.</td></tr>
+        <tr><td>Rest and travel</td><td class="num">—</td><td>Both played 16 Nov (1 day of rest). Boston flies about 1,750 miles, gains 2 time zones, and plays at 5,280 ft in the first game of a four-game trip. Queta is fresh after resting.</td><td><b>Small signal</b> toward Denver, already inside the range.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Sources: Statz box-score links and BBRef starting-lineups page, both captured 17 Nov 2026 about 8:20 PM ET. Kept only what changes the fantasy decision: rest status (Queta) and the size of the samples.</p>
+  </div>
+</details>
+
+<!-- ============ 9. LINES & MARKET ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">9</span>Lines and market context</h2><span class="sumline">Market: Celtics about 56%. This report: 50–60%. They agree. Opening line not captured.</span></summary>
+  <div class="dbody">
+    <div class="disclaimer"><b>Market context only, not betting advice.</b> These numbers are shown to explain what the market believes. This report makes no wager recommendation and claims no edge.</div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Market</th><th>Opening</th><th>Current</th><th>Movement</th><th>Timestamp</th><th>Source</th><th>Implied prob. (BOS)</th></tr></thead>
+      <tbody>
+        <tr><td>Spread</td><td><span class="tag gap">NOT CAPTURED</span></td><td class="num">BOS −2.5 (1.94) / DEN +2.5 (1.88)</td><td>Unknown</td><td class="num">Captured 17 Nov ~8:20 PM ET</td><td>DraftKings via Statz preview</td><td class="num">—</td></tr>
+        <tr><td>Moneyline</td><td><span class="tag gap">NOT CAPTURED</span></td><td class="num">BOS −141 / DEN +119</td><td>Unknown</td><td class="num">Captured 17 Nov ~8:20 PM ET</td><td>DraftKings via Statz preview</td><td class="num">58.5% raw · 56.2% no-vig</td></tr>
+        <tr><td>Total</td><td><span class="tag gap">NOT CAPTURED</span></td><td class="num">219.5 (1.94 / 1.88)</td><td>Unknown</td><td class="num">Captured 17 Nov ~8:20 PM ET</td><td>DraftKings via Statz preview</td><td class="num">—</td></tr>
+        <tr><td>Exchange (win market)</td><td class="num">≈52% (start of 1-week chart)</td><td class="num">BOS 56–57% · spread 2.5 · total 220.5</td><td class="num">BOS +4 pts over 1 week</td><td class="num">17 Nov 8:13 PM ET</td><td>Kalshi KXNBAGAME-26NOV18BOSDEN ($12.4k volume)</td><td class="num">56–57%</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>What the movement may reflect:</b> the 4-point move toward Boston over the week came with no injury news on either side. The likeliest explanation is that Boston's results and ratings are being priced in, along with ordinary money flow on a thin market ($12k volume). There was no lineup news to drive it.</p>
+    <p><b>Agreement with this report:</b> the report's 50–60% range brackets the market's 56–57%. My midpoint (55%) sits about one point below the market. The only reason is that I regress Boston's 14-game net rating harder, not that I think the market is wrong. Inside a range this wide, the market and this report say the same thing.</p>
+    <p class="note"><b>Data gap:</b> the connected odds feed (The Odds API) returned <span class="mono">401 INVALID_KEY</span> at 8:19 PM ET, so no opening line or multi-book history was captured. Lines above come from a secondary page and one exchange, and the sportsbook timestamp is approximate. Reissue triggers in Section 11 use these as the baseline.</p>
+  </div>
+</details>
+
+<!-- ============ 10. CASE AGAINST ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">10</span>The case against the verdict</h2><span class="sumline">The strongest argument for Denver, and what would change my mind.</span></summary>
+  <div class="dbody">
+    <p><b>The case for Denver:</b> Boston's 11-3 record is built on a soft early schedule: Charlotte, Chicago twice, Brooklyn, Dallas, and a Toronto team missing Barnes. Its team field-goal percentage (42.6%) and three-point percentage (about 33%) are poor. It is winning on volume and defense, which swings more from night to night than shot-making. Denver has the best player on the floor, at home, at altitude, against a team flying in for the first game of a road trip. Boston has no settled center. The 16 Nov loss showed the weakness: Garza started, Robinson picked up 5 fouls in 18 min, and Orlando won the big-man minutes with Bitadze +14. Denver's starting five keeps the full lineup on the floor for 34–39 min. Its weak net rating is mostly a bench problem, and the bench plays the fewest minutes in a close game.</p>
+    <p><b>Best evidence:</b> Jokić is averaging 24.1/10.9/8.9. Boston's center spot has had three different starters. Denver gets to the line more (FT rate 8th vs Boston's 24th), which is exactly what punishes a foul-prone Boston frontcourt.</p>
+    <p><b>What would change my mind:</b> (1) Boston starts Garza or Robinson because Queta is unavailable. (2) George or Tatum is ruled out. (3) The market moves to Denver −1 or better without news. Any one of these moves the verdict to Denver 50–58%. This case is why the range has a 50% floor and the confidence is Medium, not High.</p>
+  </div>
+</details>
+
+<!-- ============ 11. LIVING UPDATE ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">11</span>Living update and alert plan</h2><span class="sumline">Next check 1:30 PM ET Wed. Five reissue triggers. Everything else stays quiet.</span></summary>
+  <div class="dbody">
+    <div class="tablewrap"><table>
+      <thead><tr><th>Check (ET, Wed 18 Nov)</th><th>What to read</th><th>Output</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1:30 PM</td><td>1:30 PM official report; shootaround quotes from Denver and Boston beat reporters (Mazzulla on Queta and George)</td><td>UPDATED if a trigger fires; otherwise refresh the timestamp</td></tr>
+        <tr><td class="num">5:30 PM</td><td>5:30 PM official report; line check across 2+ books</td><td>UPDATED</td></tr>
+        <tr><td class="num">8:30 PM</td><td>Latest report, any probable/GTD tags, line</td><td><b>FINAL PRE-TIP</b> (deadline T−60)</td></tr>
+        <tr><td class="num">9:00 PM</td><td>Posted starting lineups (T−30)</td><td>Alert only if starters differ from Section 5</td></tr>
+        <tr><td class="num">9:30 PM</td><td>Tip-off</td><td>Report expires. Log actual starters and minutes for the backtest (Section 13).</td></tr>
+      </tbody>
+    </table></div>
+    <div class="two">
+      <div><h3>Reissue and alert when</h3><ul>
+        <li>Any projected starter (Section 5) gets a Questionable, Doubtful or Out tag, or a tag is removed.</li>
+        <li>A starter is scratched or confirmed different from the projection (Boston's center and fifth spot most likely).</li>
+        <li>A projected minute range moves 4+ minutes for any player projected at 20+ minutes.</li>
+        <li>The spread moves 2+ points from BOS −2.5 (to −4.5 or to DEN −0.5), or no-vig win probability moves 5+ points.</li>
+        <li>The total moves 3+ points from 219.5.</li>
+      </ul></div>
+      <div><h3>Not worth an alert</h3><ul>
+        <li>Two-way and G League listings (Mitchell, Williams, Whitmore, Nembhard, Holmes II).</li>
+        <li>Deep-bench DNPs (Hopkins, Diallo, Nnaji, Harper Jr., Cenac Jr., Conley).</li>
+        <li>Line moves of 0.5 to 1.5 points, or exchange swings of 1–3 percentage points.</li>
+        <li>"Probable" tags for players already projected to play.</li>
+        <li>Social-media rumors without beat-reporter or official confirmation.</li>
+        <li>New last-5 or head-to-head stats.</li>
+      </ul></div>
+    </div>
+  </div>
+</details>
+
+<!-- ============ 12. PRODUCT & SCALE ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">12</span>Product and scale decision</h2><span class="sumline">One user, one decision, one game a night. The budget cannot license all 30 teams.</span></summary>
+  <div class="dbody">
+    <p><b>Paying user and decision:</b> a daily-fantasy or season-long fantasy manager deciding <b>who from tonight's featured game to start before lock</b>. Not bettors, not casual fans.</p>
+    <p><b>Differentiation:</b> ESPN gives a scoreboard, news and an injury list, but no minute ranges, no Official/Inferred labels, and no flip condition. Rotowire is the closest competitor: it labels lineups "expected" or "confirmed," but it gives no stated confidence per starter, no A/B minute scenarios, no reissue triggers, and no published accuracy record. Action Network is built around betting picks and market edges. This report gives no picks by design. It is the only one of the four that leads with a single decision, labels every claim with source, time and confidence, says what would reverse it, and publishes its own starter and minutes errors every night.</p>
+    <p class="note"><b>Budget:</b> <span class="tag gap">NOT SUPPLIED</span>. I assumed <b>$1,500 per month</b>. Every price below is an <span class="tag inf">INFERRED</span> estimate to confirm by quote before purchase.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Data need</th><th>Source option</th><th>Est. monthly cost</th><th>Fits $1,500?</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>Official injuries</td><td>NBA official injury report (public PDF, updated through game day)</td><td class="num">$0</td><td>Yes</td><td>Reading it is free. Republishing it commercially needs a legal review.</td></tr>
+        <tr><td>Lineups and news</td><td>SportsDataIO or Rotowire data feed</td><td class="num">$500–1,500</td><td>Barely</td><td>Commercial-use tier, priced by quote.</td></tr>
+        <tr><td>Play-by-play and official stats</td><td>Sportradar (NBA official data partner) or Stats Perform</td><td class="num">$2,000–10,000+</td><td><b>No</b></td><td>Enterprise contracts, typically annual. Full 30-team coverage with redistribution rights is the expensive part.</td></tr>
+        <tr><td>Odds</td><td>The Odds API (connected, key currently invalid)</td><td class="num">$30–249</td><td>Yes</td><td>Market context only. The key needs fixing before the MVP starts.</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Plain answer:</b> $1,500 a month cannot support licensed official play-by-play and stats for all 30 teams. <b>Scope shrinks to:</b> one game per night, built by hand from the free official injury report, an odds feed, and public team pages for internal analysis, with no redistribution of third-party stats. No full-coverage claim until the Section 13 gate passes and a licensed feed is in the budget.</p>
+  </div>
+</details>
+
+<!-- ============ 13. MVP GATE ============ -->
+<details class="panel">
+  <summary><h2><span class="secnum">13</span>MVP gate and backtest plan</h2><span class="sumline">7 nights, 1 game a night, published at T−60. Four numeric gates before any expansion.</span></summary>
+  <div class="dbody">
+    <p><b>Day-one MVP:</b> this exact report for <b>one game per night for 7 nights</b>, produced by hand and published <b>60 minutes before tip</b>.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Gate</th><th>Measured against</th><th>Pass threshold</th></tr></thead>
+      <tbody>
+        <tr><td>(a) Starter accuracy</td><td>Official starters posted about 30 min before tip</td><td class="num">≥ 90% of 70 starters (≥ 63), and both lineups fully right in ≥ 4 of 7 games</td></tr>
+        <tr><td>(b) Minutes error, published nightly</td><td>Actual minutes (official box score) for players projected ≥ 20 min</td><td class="num">Mean absolute error ≤ 4.0 min, and ≥ 75% of actuals inside the projected range</td></tr>
+        <tr><td>(c) Two-minute comprehension</td><td>10 target users, timed</td><td class="num">≥ 8 of 10 state the verdict in under 2 min and point to its supporting evidence</td></tr>
+        <tr><td>(d) Trust in labels</td><td>Same report with and without Official/Inferred labels, shown in random order</td><td class="num">≥ 7 of 10 trust the labelled version more, and its mean trust score is ≥ 1.0 higher on a 5-point scale</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Backtest method</h3>
+    <ul>
+      <li><b>Starters:</b> freeze Section 5 at T−60. Compare it with the posted starters at T−30 and with the box-score starters. Score each slot as right or wrong, and log which signal drove each miss.</li>
+      <li><b>Minutes:</b> compare each projected range with actual minutes. Report the error by role (star, starter, bench) and flag blowout or overtime games separately, so outliers do not hide method errors.</li>
+      <li><b>Matchups:</b> score the "primary defender" call against NBA.com matchup tracking (the defender with the most partial possessions). Target ≥ 60% correct. This is tracked, not gated, in week one.</li>
+      <li><b>Win ranges:</b> log the range and the outcome. Seven games cannot test calibration, so this is recorded for later and not gated.</li>
+      <li><b>Pre-launch replay:</b> rebuild starter calls for 30 past games from archived injury-report PDFs at their T−60 versions. That shows whether the method clears 90% before going live.</li>
+    </ul>
+    <div class="callout"><b>Go / no-go:</b> if all four gates pass, expand to <b>3 games per night</b>, not all games, and re-gate. If any gate fails: no-go. Fix the failing step and run another 7 nights. If the same gate fails twice, stop and change the product, for example to a starters-only alert.</div>
+  </div>
+</details>
+
+<!-- ============ SOURCES ============ -->
+<footer class="panel">
+  <h2>Sources and timestamps</h2>
+  <ul class="note">
+    <li>NBA Official Injury Report, 17 Nov 2026 8:00 PM ET (ak-static.cms.nba.com, PDF), read 17 Nov ~8:20 PM ET. <span class="tag off">OFFICIAL</span></li>
+    <li>Basketball-Reference: 2026-27 BOS and DEN team pages and starting-lineup pages, rev. 17 Nov 04:59 UTC. Box scores ORL–BOS and PHO–DEN, 16 Nov, rev. 17 Nov 05:04 UTC.</li>
+    <li>Statz.ai game preview (DraftKings lines, form, injuries, team FG%), captured 17 Nov ~8:20 PM ET.</li>
+    <li>Kalshi market KXNBAGAME-26NOV18BOSDEN, page "updated 8:13 PM ET" 17 Nov.</li>
+    <li>Celtics Wire (USA Today), D. Donabedian, "Celtics at Nuggets: Stream, lineups, injury reports, broadcast (11/18)," updated 17 Nov 1:48 PM ET. Beat-adjacent projection.</li>
+    <li>Land of Basketball daily schedule for 18 Nov 2026 (slate and tip times), captured 17 Nov ~8:15 PM ET.</li>
+    <li>The Odds API, 17 Nov 8:19 PM ET: <span class="mono">401 INVALID_KEY</span>. No data used.</li>
+  </ul>
+  <p class="note"><b>Data I rejected:</b> a search snippet from NBA.com showing "Celtics 38-20 … 84 Final 103 … Nuggets 37-22" for this game. It is a stale page from the 25 Feb 2026 meeting (DEN 103-84), not this game. Statz pace figures disagreed with each other between captures (89.8/96.0, then 101/107.7), so I used Basketball-Reference pace instead.</p>
+  <p class="nextup">Next update due: 1:30 PM ET Wed 18 Nov 2026 unless a material change in Section 11 occurs first.</p>
+</footer>
+
+</div>
