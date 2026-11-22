@@ -7,6 +7,7 @@ import { buildSnapshot } from '../core/snapshot.js';
 const SOURCES = (process.env.SNAPSHOT_SOURCES || [
   'https://nba-matchup.nbalab.workers.dev/api/snapshot.json',
   'https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/latest.json',
+  'https://raw.githubusercontent.com/benjaminkorzep-rgb/STORMYS_LABORATORY_THE_ODDS_API_KEY/snapshot-data/latest.json',
   'https://doojcjhztpxacnuyqitm.supabase.co/storage/v1/object/public/snapshots/latest.json',
 ].join(',')).split(',');
 const getJSON = async url => { try { const r = await fetch(url, { signal: AbortSignal.timeout(8000) }); return r.ok ? await r.json() : null; } catch { return null; } };

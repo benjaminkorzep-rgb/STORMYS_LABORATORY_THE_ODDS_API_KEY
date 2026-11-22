@@ -4,10 +4,10 @@
 // falling back to a team-level full build only when no full snapshot exists anywhere.
 import { lightRefresh, buildSnapshot } from '../../core/snapshot.js';
 import { slateDateET } from '../../core/normalize.js';
-import { polish, stateHash } from '../../core/narrative.js';
 import { sendPush } from './push.js';
 
 const PAGES = 'https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/latest.json';
+const RAW = 'https://raw.githubusercontent.com/benjaminkorzep-rgb/STORMYS_LABORATORY_THE_ODDS_API_KEY/snapshot-data/latest.json';
 const SUPABASE = 'https://doojcjhztpxacnuyqitm.supabase.co/storage/v1/object/public/snapshots/latest.json';
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type' };
 const json = (body, extra = {}) => new Response(typeof body === 'string' ? body : JSON.stringify(body), { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'max-age=60', ...CORS, ...extra } });
@@ -45,23 +45,19 @@ export async function probe(env) {
 
 export async function refresh(env, { trigger = 'cron' } = {}) {
   const now = new Date();
-  const [kvPrev, pages, supa] = await Promise.all([env.SNAP.get('latest', 'json'), getJSON(PAGES), getJSON(SUPABASE)]);
-  const fulls = [kvPrev, pages, supa].filter(s => s && s.schemaVersion === 2 && s.games?.some(g => g.analysis));
-  const base = fulls.sort((a, b) => String(b.source?.analysisFrom?.generatedAt || b.generatedAt).localeCompare(String(a.source?.analysisFrom?.generatedAt || a.generatedAt)))[0] || null;
+  const [kvPrev, pages, raw, supa] = await Promise.all([env.SNAP.get('latest', 'json'), getJSON(PAGES), getJSON(RAW), getJSON(SUPABASE)]);
+  const fulls = [kvPrev, pages, raw, supa].filter(s => s && s.schemaVersion === 2 && s.games?.some(g => g.analysis));
+  // Prefer a base built with player data (Writer B's daily.json), then the newest analysis.
+  const today = slateDateET(now);
+  const rich = s => (s.slateDate === today ? 2 : 0) + (s.games.some(g => g.analysis?.players?.length) ? 1 : 0);
+  const at = s => String(s.source?.analysisFrom?.generatedAt || s.generatedAt);
+  const base = fulls.sort((a, b) => rich(b) - rich(a) || at(b).localeCompare(at(a)))[0] || null;
   let snap;
   if (base && base.slateDate === slateDateET(now)) snap = await lightRefresh({ base, prev: kvPrev || base, now, writer: 'worker' });
-  else snap = await buildSnapshot({ writer: 'worker', prev: kvPrev, now, maxSummaries: 6, daily: await getJSON(PAGES.replace('latest.json', 'daily.json')) });
+  else snap = await buildSnapshot({ writer: 'worker', prev: kvPrev, now, maxSummaries: 6, daily: (await getJSON(RAW.replace('latest.json', 'daily.json'))) || (await getJSON(PAGES.replace('latest.json', 'daily.json'))) });
   snap.source.trigger = trigger;
-  // Narrative polish (Workers AI) — rules text ships unchanged on any failure; cached per state hash.
-  if (env.AI && snap.narrative?.slate?.length) {
-    const key = 'nar:' + stateHash({ games: snap.games.map(g => [g.id, g.odds?.spreadHome, g.state]) });
-    let cached = await env.SNAP.get(key);
-    if (!cached) {
-      const p = await polish(snap.narrative.slate[0], { provider: 'workers-ai', call: async prompt => (await env.AI.run(AI_MODEL, { prompt, max_tokens: 350 })).response });
-      if (p.source !== 'rules') { cached = p.text; await env.SNAP.put(key, cached, { expirationTtl: 86400 }); }
-    }
-    if (cached) { snap.narrative.slate[0] = cached; snap.narrative.source = 'workers-ai (P1) + rules'; }
-  }
+  // Workers-AI polish removed 2026-11-22: in production it invented figures (e.g. a game not on the slate). Rules text only.
+  snap.narrative.source = 'rules';
   const hhmm = now.toISOString().slice(11, 16).replace(':', '');
   const body = JSON.stringify(snap);
   await env.SNAP.put('latest', body);                                   // 3 KV writes per run → 216/day (limit 1,000)

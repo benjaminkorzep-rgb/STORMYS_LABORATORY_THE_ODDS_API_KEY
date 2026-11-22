@@ -1,10 +1,11 @@
-# Writer B: full-engine snapshot every 20 min on off-minutes, deployed to GitHub Pages as an artifact (no commits).
+# Writer B: full-engine snapshot every 20 min on off-minutes. Publishes data to the orphan branch `snapshot-data`
+# (served by raw.githubusercontent.com with CORS *), and to GitHub Pages when Pages is enabled in repo settings.
 name: snapshot
 on:
   schedule: [{ cron: "7,27,47 * * * *" }]
   workflow_dispatch: {}
   push: { branches: [claude/nba-pregame-matchup-report-fvu96u], paths: ["site/**", "core/**", "scripts/**", ".github/workflows/snapshot.yml"] }
-permissions: { contents: read, pages: write, id-token: write }
+permissions: { contents: write, pages: write, id-token: write }
 concurrency: { group: pages, cancel-in-progress: false }
 jobs:
   build:
@@ -20,7 +21,7 @@ jobs:
         run: |
           mkdir -p site/data
           for f in daily.json trends.json trends-diff.json runs.json; do
-            curl -fsS -m 15 "https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/$f" -o "site/data/$f" || true
+            curl -fsS -m 15 "https://raw.githubusercontent.com/benjaminkorzep-rgb/STORMYS_LABORATORY_THE_ODDS_API_KEY/snapshot-data/$f" -o "site/data/$f" || curl -fsS -m 15 "https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/$f" -o "site/data/$f" || true
           done
       - name: Daily player data (once per ET day, or when missing)
         run: |
@@ -30,12 +31,22 @@ jobs:
         run: node scripts/build-snapshot.mjs
       - name: Copy shared core into the site
         run: rm -rf site/core && cp -r core site/core && cp probe.txt site/data/probe-actions.txt
-      - uses: actions/configure-pages@v5
-        with: { enablement: true }
-      - uses: actions/upload-pages-artifact@v3
+      - name: Publish data to the snapshot-data branch
+        run: |
+          mkdir -p /tmp/pub && cp site/data/*.json site/data/probe-actions.txt /tmp/pub/ 2>/dev/null || true
+          cd /tmp/pub && git init -q -b snapshot-data && git config user.name "snapshot-bot" && git config user.email "actions@users.noreply.github.com"
+          git add -A && git commit -qm "snapshot $(date -u +%FT%TZ)"
+          git push -fq "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" snapshot-data
+      - id: pages
+        uses: actions/configure-pages@v5
+        continue-on-error: true
+      - if: steps.pages.outcome == 'success'
+        uses: actions/upload-pages-artifact@v3
         with: { path: site }
+    outputs: { pages: "${{ steps.pages.outcome }}" }
   deploy:
     needs: build
+    if: needs.build.outputs.pages == 'success'
     runs-on: ubuntu-latest
     environment: { name: github-pages, url: "${{ steps.deployment.outputs.page_url }}" }
     steps:

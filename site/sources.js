@@ -7,6 +7,7 @@ export const SNAPSHOT_URLS = [
   './data/latest.json',                                                                           // Pages (same origin)
   'https://doojcjhztpxacnuyqitm.supabase.co/storage/v1/object/public/snapshots/latest.json',      // Supabase Storage
   'https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/latest.json',     // Pages (absolute)
+  'https://raw.githubusercontent.com/benjaminkorzep-rgb/STORMYS_LABORATORY_THE_ODDS_API_KEY/snapshot-data/latest.json',   // Actions (data branch)
   WORKER_PLACEHOLDER,                                                                             // Worker (absolute, from config.json)
 ];
 
@@ -15,6 +16,7 @@ export function labelFor(url) {
   if (/fixture-snapshot/.test(url)) return 'Fixture';
   if (/\/api\/snapshot\.json/.test(url)) return 'Worker';
   if (/supabase\.co/.test(url)) return 'Supabase';
+  if (/raw\.githubusercontent/.test(url)) return 'Actions';
   if (/latest\.json/.test(url)) return 'Pages';
   return 'Snapshot';
 }

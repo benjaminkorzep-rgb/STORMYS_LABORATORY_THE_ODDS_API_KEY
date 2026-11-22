@@ -12,7 +12,7 @@ const INJ = `${ESPN}/injuries`;
 const TABS = ['slate', 'games', 'players', 'trends', 'changes', 'alerts', 'method', 'health'];
 const PARAMS = new URLSearchParams(location.search);
 const FIXTURE = PARAMS.has('fixture');
-const SERVER_LABELS = new Set(['Worker', 'Pages', 'Supabase']);
+const SERVER_LABELS = new Set(['Worker', 'Pages', 'Supabase', 'Actions']);
 
 // ---------------------------------------------------------------- helpers
 const $ = id => document.getElementById(id);
