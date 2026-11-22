@@ -1,0 +1,43 @@
+# Writer B: full-engine snapshot every 20 min on off-minutes, deployed to GitHub Pages as an artifact (no commits).
+name: snapshot
+on:
+  schedule: [{ cron: "7,27,47 * * * *" }]
+  workflow_dispatch: {}
+  push: { branches: [claude/nba-pregame-matchup-report-fvu96u], paths: ["site/**", "core/**", "scripts/**", ".github/workflows/snapshot.yml"] }
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: pages, cancel-in-progress: false }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Day-1 probe T2/T4 (ESPN + cdn.nba.com from GitHub egress)
+        run: node scripts/probe.mjs | tee probe.txt
+      - name: Carry forward published data files
+        run: |
+          mkdir -p site/data
+          for f in daily.json trends.json trends-diff.json runs.json; do
+            curl -fsS -m 15 "https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/$f" -o "site/data/$f" || true
+          done
+      - name: Daily player data (once per ET day, or when missing)
+        run: |
+          TODAY=$(TZ=America/New_York date -d '-6 hours' +%F)
+          if ! grep -q "\"date\":\"$TODAY\"" site/data/daily.json 2>/dev/null; then node scripts/build-daily.mjs; else echo "daily.json is current ($TODAY)"; fi
+      - name: Build snapshot
+        run: node scripts/build-snapshot.mjs
+      - name: Copy shared core into the site
+        run: rm -rf site/core && cp -r core site/core && cp probe.txt site/data/probe-actions.txt
+      - uses: actions/configure-pages@v5
+        with: { enablement: true }
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.deployment.outputs.page_url }}" }
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

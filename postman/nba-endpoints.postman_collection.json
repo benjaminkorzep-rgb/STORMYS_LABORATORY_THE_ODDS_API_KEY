@@ -1,0 +1,1945 @@
+{
+  "info": {
+    "name": "NBA endpoints (adapters)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "One request per adapter in core/adapters (ESPN + extra). Generated from EXTRA_ADAPTERS."
+  },
+  "variable": [
+    {
+      "key": "date",
+      "value": "2026-11-22"
+    },
+    {
+      "key": "yyyymmdd",
+      "value": "20261122"
+    },
+    {
+      "key": "brefInitial",
+      "value": ""
+    },
+    {
+      "key": "eventId",
+      "value": ""
+    },
+    {
+      "key": "teamId",
+      "value": ""
+    },
+    {
+      "key": "athleteId",
+      "value": ""
+    },
+    {
+      "key": "espnSeason",
+      "value": "2027"
+    },
+    {
+      "key": "nbaGameId",
+      "value": ""
+    },
+    {
+      "key": "nbaPlayerId",
+      "value": ""
+    },
+    {
+      "key": "nbaTeamId",
+      "value": ""
+    },
+    {
+      "key": "brefPlayerId",
+      "value": ""
+    },
+    {
+      "key": "oddsApiKey",
+      "value": ""
+    },
+    {
+      "key": "hh",
+      "value": "05"
+    },
+    {
+      "key": "mm",
+      "value": "00"
+    },
+    {
+      "key": "ampm",
+      "value": "PM"
+    }
+  ],
+  "item": [
+    {
+      "name": "espnScoreboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={{date}}",
+          "protocol": "https",
+          "host": [
+            "site",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "site",
+            "v2",
+            "sports",
+            "basketball",
+            "nba",
+            "scoreboard"
+          ],
+          "query": [
+            {
+              "key": "dates",
+              "value": "{{date}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnSummary",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: pbp; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={{eventId}}",
+          "protocol": "https",
+          "host": [
+            "site",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "site",
+            "v2",
+            "sports",
+            "basketball",
+            "nba",
+            "summary"
+          ],
+          "query": [
+            {
+              "key": "event",
+              "value": "{{eventId}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnInjuries",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: injuries; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+          "protocol": "https",
+          "host": [
+            "site",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "site",
+            "v2",
+            "sports",
+            "basketball",
+            "nba",
+            "injuries"
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnStandings",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
+          "protocol": "https",
+          "host": [
+            "site",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "v2",
+            "sports",
+            "basketball",
+            "nba",
+            "standings"
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnRoster",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{{teamId}}/roster",
+          "protocol": "https",
+          "host": [
+            "site",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "site",
+            "v2",
+            "sports",
+            "basketball",
+            "nba",
+            "teams",
+            "{{teamId}}",
+            "roster"
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnSchedule",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{{teamId}}/schedule?season={{espnSeason}}",
+          "protocol": "https",
+          "host": [
+            "site",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "site",
+            "v2",
+            "sports",
+            "basketball",
+            "nba",
+            "teams",
+            "{{teamId}}",
+            "schedule"
+          ],
+          "query": [
+            {
+              "key": "season",
+              "value": "{{espnSeason}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnGamelog",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: gamelogs; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{{athleteId}}/gamelog?season={{espnSeason}}",
+          "protocol": "https",
+          "host": [
+            "site",
+            "web",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "common",
+            "v3",
+            "sports",
+            "basketball",
+            "nba",
+            "athletes",
+            "{{athleteId}}",
+            "gamelog"
+          ],
+          "query": [
+            {
+              "key": "season",
+              "value": "{{espnSeason}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnSplits",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{{athleteId}}/splits",
+          "protocol": "https",
+          "host": [
+            "site",
+            "web",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "apis",
+            "common",
+            "v3",
+            "sports",
+            "basketball",
+            "nba",
+            "athletes",
+            "{{athleteId}}",
+            "splits"
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnCoreOdds",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: odds; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/{{eventId}}/competitions/{{eventId}}/odds",
+          "protocol": "https",
+          "host": [
+            "sports",
+            "core",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "v2",
+            "sports",
+            "basketball",
+            "leagues",
+            "nba",
+            "events",
+            "{{eventId}}",
+            "competitions",
+            "{{eventId}}",
+            "odds"
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnPropBets",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/{{eventId}}/competitions/{{eventId}}/odds/100/propBets?limit=1000",
+          "protocol": "https",
+          "host": [
+            "sports",
+            "core",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "v2",
+            "sports",
+            "basketball",
+            "leagues",
+            "nba",
+            "events",
+            "{{eventId}}",
+            "competitions",
+            "{{eventId}}",
+            "odds",
+            "100",
+            "propBets"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "1000"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnOfficials",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: referees; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/{{eventId}}/competitions/{{eventId}}/officials",
+          "protocol": "https",
+          "host": [
+            "sports",
+            "core",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "v2",
+            "sports",
+            "basketball",
+            "leagues",
+            "nba",
+            "events",
+            "{{eventId}}",
+            "competitions",
+            "{{eventId}}",
+            "officials"
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnDepthChart",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: lineups; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/{{espnSeason}}/teams/{{teamId}}/depthcharts",
+          "protocol": "https",
+          "host": [
+            "sports",
+            "core",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "v2",
+            "sports",
+            "basketball",
+            "leagues",
+            "nba",
+            "seasons",
+            "{{espnSeason}}",
+            "teams",
+            "{{teamId}}",
+            "depthcharts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "espnPowerIndex",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/{{espnSeason}}/powerindex",
+          "protocol": "https",
+          "host": [
+            "sports",
+            "core",
+            "api",
+            "espn",
+            "com"
+          ],
+          "path": [
+            "v2",
+            "sports",
+            "basketball",
+            "leagues",
+            "nba",
+            "seasons",
+            "{{espnSeason}}",
+            "powerindex"
+          ]
+        }
+      }
+    },
+    {
+      "name": "actionNetworkScoreboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: odds; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://api.actionnetwork.com/web/v2/scoreboard/nba?bookIds=15,30,68,69,75,123&date={{yyyymmdd}}&periods=event",
+          "protocol": "https",
+          "host": [
+            "api",
+            "actionnetwork",
+            "com"
+          ],
+          "path": [
+            "web",
+            "v2",
+            "scoreboard",
+            "nba"
+          ],
+          "query": [
+            {
+              "key": "bookIds",
+              "value": "15,30,68,69,75,123"
+            },
+            {
+              "key": "date",
+              "value": "{{yyyymmdd}}"
+            },
+            {
+              "key": "periods",
+              "value": "event"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "actionNetworkInjuries",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: injuries; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://api.actionnetwork.com/web/v1/leagues/4/injuries",
+          "protocol": "https",
+          "host": [
+            "api",
+            "actionnetwork",
+            "com"
+          ],
+          "path": [
+            "web",
+            "v1",
+            "leagues",
+            "4",
+            "injuries"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaTodaysScoreboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: none; server-only: Chrome client hints, no CORS",
+        "url": {
+          "raw": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
+          "protocol": "https",
+          "host": [
+            "cdn",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "static",
+            "json",
+            "liveData",
+            "scoreboard",
+            "todaysScoreboard_00.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaOdds",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: odds; server-only: Chrome client hints, no CORS",
+        "url": {
+          "raw": "https://cdn.nba.com/static/json/liveData/odds/odds_todaysGames.json",
+          "protocol": "https",
+          "host": [
+            "cdn",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "static",
+            "json",
+            "liveData",
+            "odds",
+            "odds_todaysGames.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaBoxscore",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: none; server-only: Chrome client hints, no CORS",
+        "url": {
+          "raw": "https://cdn.nba.com/static/json/liveData/boxscore/boxscore_{{nbaGameId}}.json",
+          "protocol": "https",
+          "host": [
+            "cdn",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "static",
+            "json",
+            "liveData",
+            "boxscore",
+            "boxscore_{{nbaGameId}}.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaPlayByPlay",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: pbp; server-only: Chrome client hints, no CORS",
+        "url": {
+          "raw": "https://cdn.nba.com/static/json/liveData/playbyplay/playbyplay_{{nbaGameId}}.json",
+          "protocol": "https",
+          "host": [
+            "cdn",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "static",
+            "json",
+            "liveData",
+            "playbyplay",
+            "playbyplay_{{nbaGameId}}.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaSchedule",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: none; server-only: Chrome client hints, no CORS",
+        "url": {
+          "raw": "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json",
+          "protocol": "https",
+          "host": [
+            "cdn",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "static",
+            "json",
+            "staticData",
+            "scheduleLeagueV2_1.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaPlayerIndex",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: none; server-only: Chrome client hints, no CORS; UNVERIFIED",
+        "url": {
+          "raw": "https://cdn.nba.com/static/json/staticData/playerIndex.json",
+          "protocol": "https",
+          "host": [
+            "cdn",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "static",
+            "json",
+            "staticData",
+            "playerIndex.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaDailyLineups",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: lineups; server-only: Chrome client hints, no CORS",
+        "url": {
+          "raw": "https://stats.nba.com/js/data/leaders/00_daily_lineups_{{yyyymmdd}}.json",
+          "protocol": "https",
+          "host": [
+            "stats",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "js",
+            "data",
+            "leaders",
+            "00_daily_lineups_{{yyyymmdd}}.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaInjuryIndex",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: injuries; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://official.nba.com/nba-injury-report-2026-27-season/",
+          "protocol": "https",
+          "host": [
+            "official",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "nba-injury-report-2026-27-season"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaInjuryPdf",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json, text/plain, */*"
+          },
+          {
+            "key": "Accept-Language",
+            "value": "en-US,en;q=0.9"
+          },
+          {
+            "key": "Accept-Encoding",
+            "value": "gzip, deflate, br, zstd"
+          },
+          {
+            "key": "Origin",
+            "value": "https://www.nba.com"
+          },
+          {
+            "key": "Referer",
+            "value": "https://www.nba.com/"
+          },
+          {
+            "key": "sec-ch-ua",
+            "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+          },
+          {
+            "key": "sec-ch-ua-mobile",
+            "value": "?0"
+          },
+          {
+            "key": "sec-ch-ua-platform",
+            "value": "\"Windows\""
+          },
+          {
+            "key": "sec-fetch-dest",
+            "value": "empty"
+          },
+          {
+            "key": "sec-fetch-mode",
+            "value": "cors"
+          },
+          {
+            "key": "sec-fetch-site",
+            "value": "same-site"
+          },
+          {
+            "key": "Connection",
+            "value": "keep-alive"
+          }
+        ],
+        "description": "chains: injuries; server-only: Chrome client hints, no CORS; UNVERIFIED",
+        "url": {
+          "raw": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_{{date}}_{{hh}}_{{mm}}{{ampm}}.pdf",
+          "protocol": "https",
+          "host": [
+            "ak-static",
+            "cms",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "referee",
+            "injury",
+            "Injury-Report_{{date}}_{{hh}}_{{mm}}{{ampm}}.pdf"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbaRefAssignments",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: referees; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://official.nba.com/referee-assignments/",
+          "protocol": "https",
+          "host": [
+            "official",
+            "nba",
+            "com"
+          ],
+          "path": [
+            "referee-assignments"
+          ]
+        }
+      }
+    },
+    {
+      "name": "nbastufferRefStats",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: referees; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://www.nbastuffer.com/2026-2027-nba-referee-stats/",
+          "protocol": "https",
+          "host": [
+            "www",
+            "nbastuffer",
+            "com"
+          ],
+          "path": [
+            "2026-2027-nba-referee-stats"
+          ]
+        }
+      }
+    },
+    {
+      "name": "pbpstatsGames",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.pbpstats.com/get-games/nba?Season=2026-27&SeasonType=Regular%20Season",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pbpstats",
+            "com"
+          ],
+          "path": [
+            "get-games",
+            "nba"
+          ],
+          "query": [
+            {
+              "key": "Season",
+              "value": "2026-27"
+            },
+            {
+              "key": "SeasonType",
+              "value": "Regular Season"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pbpstatsTeamTotals",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.pbpstats.com/get-totals/nba?Season=2026-27&SeasonType=Regular%20Season&Type=Team",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pbpstats",
+            "com"
+          ],
+          "path": [
+            "get-totals",
+            "nba"
+          ],
+          "query": [
+            {
+              "key": "Season",
+              "value": "2026-27"
+            },
+            {
+              "key": "SeasonType",
+              "value": "Regular Season"
+            },
+            {
+              "key": "Type",
+              "value": "Team"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pbpstatsLineupTotals",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.pbpstats.com/get-totals/nba?Season=2026-27&SeasonType=Regular%20Season&Type=Lineup",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pbpstats",
+            "com"
+          ],
+          "path": [
+            "get-totals",
+            "nba"
+          ],
+          "query": [
+            {
+              "key": "Season",
+              "value": "2026-27"
+            },
+            {
+              "key": "SeasonType",
+              "value": "Regular Season"
+            },
+            {
+              "key": "Type",
+              "value": "Lineup"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pbpstatsPlayerGameLogs",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: gamelogs; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.pbpstats.com/get-game-logs/nba?Season=2026-27&SeasonType=Regular%20Season&EntityType=Player&EntityId={{nbaPlayerId}}",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pbpstats",
+            "com"
+          ],
+          "path": [
+            "get-game-logs",
+            "nba"
+          ],
+          "query": [
+            {
+              "key": "Season",
+              "value": "2026-27"
+            },
+            {
+              "key": "SeasonType",
+              "value": "Regular Season"
+            },
+            {
+              "key": "EntityType",
+              "value": "Player"
+            },
+            {
+              "key": "EntityId",
+              "value": "{{nbaPlayerId}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pbpstatsShots",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.pbpstats.com/get-shots/nba?Season=2026-27&SeasonType=Regular%20Season&EntityType=Team&EntityId={{nbaTeamId}}",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pbpstats",
+            "com"
+          ],
+          "path": [
+            "get-shots",
+            "nba"
+          ],
+          "query": [
+            {
+              "key": "Season",
+              "value": "2026-27"
+            },
+            {
+              "key": "SeasonType",
+              "value": "Regular Season"
+            },
+            {
+              "key": "EntityType",
+              "value": "Team"
+            },
+            {
+              "key": "EntityId",
+              "value": "{{nbaTeamId}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pbpstatsWowy",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.pbpstats.com/get-wowy-stats/nba?Season=2026-27&SeasonType=Regular%20Season&TeamId={{nbaTeamId}}&Type=Player",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pbpstats",
+            "com"
+          ],
+          "path": [
+            "get-wowy-stats",
+            "nba"
+          ],
+          "query": [
+            {
+              "key": "Season",
+              "value": "2026-27"
+            },
+            {
+              "key": "SeasonType",
+              "value": "Regular Season"
+            },
+            {
+              "key": "TeamId",
+              "value": "{{nbaTeamId}}"
+            },
+            {
+              "key": "Type",
+              "value": "Player"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pbpstatsLiveGames",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: pbp; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.pbpstats.com/live/games/nba",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pbpstats",
+            "com"
+          ],
+          "path": [
+            "live",
+            "games",
+            "nba"
+          ]
+        }
+      }
+    },
+    {
+      "name": "underdogLines",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://api.underdogfantasy.com/beta/v5/over_under_lines",
+          "protocol": "https",
+          "host": [
+            "api",
+            "underdogfantasy",
+            "com"
+          ],
+          "path": [
+            "beta",
+            "v5",
+            "over_under_lines"
+          ]
+        }
+      }
+    },
+    {
+      "name": "polymarketNba",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://gamma-api.polymarket.com/events?tag_slug=nba&active=true&closed=false&limit=100",
+          "protocol": "https",
+          "host": [
+            "gamma-api",
+            "polymarket",
+            "com"
+          ],
+          "path": [
+            "events"
+          ],
+          "query": [
+            {
+              "key": "tag_slug",
+              "value": "nba"
+            },
+            {
+              "key": "active",
+              "value": "true"
+            },
+            {
+              "key": "closed",
+              "value": "false"
+            },
+            {
+              "key": "limit",
+              "value": "100"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "theScoreEvents",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        "description": "chains: none; server-only: no CORS / HTML scrape; UNVERIFIED",
+        "url": {
+          "raw": "https://api.thescore.com/nba/events",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thescore",
+            "com"
+          ],
+          "path": [
+            "nba",
+            "events"
+          ]
+        }
+      }
+    },
+    {
+      "name": "sleeperPlayers",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.sleeper.app/v1/players/nba",
+          "protocol": "https",
+          "host": [
+            "api",
+            "sleeper",
+            "app"
+          ],
+          "path": [
+            "v1",
+            "players",
+            "nba"
+          ]
+        }
+      }
+    },
+    {
+      "name": "sleeperState",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; browser OK (CORS-open JSON)",
+        "url": {
+          "raw": "https://api.sleeper.app/v1/state/nba",
+          "protocol": "https",
+          "host": [
+            "api",
+            "sleeper",
+            "app"
+          ],
+          "path": [
+            "v1",
+            "state",
+            "nba"
+          ]
+        }
+      }
+    },
+    {
+      "name": "rotowireLineups",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: lineups; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://www.rotowire.com/basketball/nba-lineups.php",
+          "protocol": "https",
+          "host": [
+            "www",
+            "rotowire",
+            "com"
+          ],
+          "path": [
+            "basketball",
+            "nba-lineups.php"
+          ]
+        }
+      }
+    },
+    {
+      "name": "rotowireInjuries",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://www.rotowire.com/basketball/tables/injury-report.php?team=ALL&pos=ALL",
+          "protocol": "https",
+          "host": [
+            "www",
+            "rotowire",
+            "com"
+          ],
+          "path": [
+            "basketball",
+            "tables",
+            "injury-report.php"
+          ],
+          "query": [
+            {
+              "key": "team",
+              "value": "ALL"
+            },
+            {
+              "key": "pos",
+              "value": "ALL"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "brefSchedule",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; server-only: HTML, 20 req/min bucket",
+        "url": {
+          "raw": "https://www.basketball-reference.com/leagues/NBA_2027_games-november.html",
+          "protocol": "https",
+          "host": [
+            "www",
+            "basketball-reference",
+            "com"
+          ],
+          "path": [
+            "leagues",
+            "NBA_2027_games-november.html"
+          ]
+        }
+      }
+    },
+    {
+      "name": "brefGamelog",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: gamelogs; server-only: HTML, 20 req/min bucket",
+        "url": {
+          "raw": "https://www.basketball-reference.com/players/{{brefInitial}}/{{brefPlayerId}}/gamelog/2027",
+          "protocol": "https",
+          "host": [
+            "www",
+            "basketball-reference",
+            "com"
+          ],
+          "path": [
+            "players",
+            "{{brefInitial}}",
+            "{{brefPlayerId}}",
+            "gamelog",
+            "2027"
+          ]
+        }
+      }
+    },
+    {
+      "name": "brefReferees",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; server-only: HTML, 20 req/min bucket",
+        "url": {
+          "raw": "https://www.basketball-reference.com/referees/2027_register.html",
+          "protocol": "https",
+          "host": [
+            "www",
+            "basketball-reference",
+            "com"
+          ],
+          "path": [
+            "referees",
+            "2027_register.html"
+          ]
+        }
+      }
+    },
+    {
+      "name": "theOddsApiOdds",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: odds; server-only: secret apiKey",
+        "url": {
+          "raw": "https://api.the-odds-api.com/v4/sports/basketball_nba/odds?apiKey={{oddsApiKey}}&regions=us&markets=h2h%2Cspreads%2Ctotals&oddsFormat=american",
+          "protocol": "https",
+          "host": [
+            "api",
+            "the-odds-api",
+            "com"
+          ],
+          "path": [
+            "v4",
+            "sports",
+            "basketball_nba",
+            "odds"
+          ],
+          "query": [
+            {
+              "key": "apiKey",
+              "value": "{{oddsApiKey}}"
+            },
+            {
+              "key": "regions",
+              "value": "us"
+            },
+            {
+              "key": "markets",
+              "value": "h2h,spreads,totals"
+            },
+            {
+              "key": "oddsFormat",
+              "value": "american"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "cbsInjuries",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "User-Agent",
+            "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+          }
+        ],
+        "description": "chains: none; server-only: no CORS / HTML scrape",
+        "url": {
+          "raw": "https://www.cbssports.com/nba/injuries/",
+          "protocol": "https",
+          "host": [
+            "www",
+            "cbssports",
+            "com"
+          ],
+          "path": [
+            "nba",
+            "injuries"
+          ]
+        }
+      }
+    }
+  ]
+}

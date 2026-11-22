@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backtest Report</title><style>:root{--bg:#fff;--fg:#111;--mut:#555}@media (prefers-color-scheme:dark){:root{--bg:#0d1117;--fg:#e6edf3;--mut:#9aa4af}}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 -apple-system,system-ui,sans-serif;margin:0 auto;max-width:720px;padding:16px}p{color:var(--mut)}code{font-size:13px}</style></head>
+<body><h1>Backtest report</h1>
+<p><b>Status: not run.</b> This engine has not yet been run or backtested. Every number in the spec is a starting prior to be re-estimated by the walk-forward backtest.</p>
+<p>Protocol (APPENDIX B §11), implemented in <code>engine/backtest.mjs</code> and <code>engine/metrics.js</code>: tune on 2019-20 … 2023-24, freeze on 2024-25, score once on 2025-26.
+Season 2025-26 stays locked until the frozen parameter file exists. The historical backfill (<code>engine/backfill.mjs</code>) runs in GitHub Actions, because ESPN is not reachable from the build machine.</p>
+<p>When the run finishes, this page will be replaced with log-loss and Brier score against the closing line, calibration bins and CLV. Until then every screen reads “priors — backtest pending”.</p>
+<p><a href="../">Back to the app</a></p></body></html>

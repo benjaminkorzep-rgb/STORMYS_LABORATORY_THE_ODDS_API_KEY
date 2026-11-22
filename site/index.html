@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NBA Matchup Lab</title>
+<meta name="description" content="NBA slate board: live scores, market-anchored win probability, injury scenarios and player projections.">
+<meta name="theme-color" content="#1a2023" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Matchup Lab">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar" id="bar">
+  <div class="barin">
+    <div class="brand"><span class="dot" id="liveDot" aria-hidden="true"></span><b>Matchup Lab</b></div>
+    <div class="badge" id="badge" role="status" aria-live="polite">
+      <span class="pill" id="bSource">Loading…</span>
+      <span class="pill" id="bAge" hidden></span>
+      <span class="pill" id="bEspn" hidden></span>
+      <span class="pill warn" id="bMethod" hidden></span>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections">
+    <a href="#slate" data-tab="slate">Slate</a>
+    <a href="#games" data-tab="games">Games</a>
+    <a href="#players" data-tab="players">Players</a>
+    <a href="#trends" data-tab="trends">Trends</a>
+    <a href="#changes" data-tab="changes">Changes</a>
+    <a href="#alerts" data-tab="alerts">Alerts</a>
+    <a href="#method" data-tab="method">Method</a>
+    <a href="#health" data-tab="health">Health</a>
+  </nav>
+</header>
+<main class="wrap" id="main">
+  <noscript><p class="banner crit">This app needs JavaScript.</p></noscript>
+  <div id="banner" class="banner" hidden></div>
+  <section id="view-slate" class="view" data-view="slate"></section>
+  <section id="view-games" class="view" data-view="games" hidden></section>
+  <section id="view-players" class="view" data-view="players" hidden></section>
+  <section id="view-trends" class="view" data-view="trends" hidden></section>
+  <section id="view-changes" class="view" data-view="changes" hidden></section>
+  <section id="view-alerts" class="view" data-view="alerts" hidden></section>
+  <section id="view-method" class="view" data-view="method" hidden></section>
+  <section id="view-health" class="view" data-view="health" hidden></section>
+  <p class="note foot">Market context only, not betting advice. Data: ESPN public feeds (live, straight from your phone) and this project's snapshot writers.</p>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

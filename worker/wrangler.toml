@@ -1,0 +1,25 @@
+name = "nba-matchup"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+account_id = "cd78dbf0d48382543d6b861b3f47aa19"
+workers_dev = true
+
+[triggers]
+crons = ["*/20 * * * *", "5-59/20 * * * *"]
+
+[[kv_namespaces]]
+binding = "SNAP"
+id = "f816dbba56a749bfb2c9d67158a29ee5"
+
+[ai]
+binding = "AI"
+
+# [assets] removed: the agent proxy overrides the assets-upload JWT (401). The PWA is served by
+# GitHub Pages (Writer B); this Worker serves the API and redirects other paths to Pages.
+
+[vars]
+VAPID_PUBLIC = "BM7VMXDQ-K1BV0WsI_JT8qWtiTsvpcAsz3eP_WkdGEH0DfW9zcn-Gf6w0dSSQW7saWg6o8ynUrVAHf45bycZqNY"
+
+# R2 HIST binding is specified by the build plan but R2 is not enabled on this account
+# ("Please enable R2 through the Cloudflare Dashboard", code 10042). History is kept in KV
+# (latest:<date> + runs log) and in Writer B's Pages artifact until R2 is switched on.

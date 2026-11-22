@@ -1,0 +1,7 @@
+{
+  "workerUrl": "https://nba-matchup.nbalab.workers.dev",
+  "pagesUrl": "https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/latest.json",
+  "supabaseUrl": "https://doojcjhztpxacnuyqitm.supabase.co/storage/v1/object/public/snapshots/latest.json",
+  "vapidPublicKey": "BM7VMXDQ-K1BV0WsI_JT8qWtiTsvpcAsz3eP_WkdGEH0DfW9zcn-Gf6w0dSSQW7saWg6o8ynUrVAHf45bycZqNY",
+  "snapshotTimeoutMs": 6000
+}

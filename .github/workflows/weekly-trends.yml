@@ -1,0 +1,19 @@
+# Weekly trend re-test (§10): FDR across the hypothesis registry; publishes trends.json for the snapshot writers.
+name: weekly-trends
+on:
+  schedule: [{ cron: "41 10 * * 1" }]
+  workflow_dispatch: {}
+permissions: { contents: write }
+jobs:
+  trends:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node engine/weekly-trends.mjs
+      - run: |
+          git config user.name "trends-bot" && git config user.email "trends@users.noreply.github.com"
+          git add site/data/trends.json site/data/trends-diff.json 2>/dev/null || true
+          git commit -m "weekly trends re-test $(date -u +%F)" && git push || echo "no changes"

@@ -1,0 +1,144 @@
+{
+  "id": "401705123",
+  "date": "2026-11-23T02:00:00Z",
+  "state": "pre",
+  "detail": "Sun, November 22nd at 9:00 PM EST",
+  "tv": "NBA TV",
+  "neutral": false,
+  "venue": { "name": "Ball Arena", "city": "Denver", "team": "DEN", "altFt": 5280, "tz": "America/Denver", "lat": 39.7487, "lon": -105.0077 },
+  "home": { "id": "7", "abbr": "DEN", "name": "Denver Nuggets", "record": "11-5", "homeRecord": "7-1", "awayRecord": "4-4", "score": null, "last5": "WWLWW", "restDays": 2, "b2b": false },
+  "away": { "id": "13", "abbr": "LAL", "name": "Los Angeles Lakers", "record": "9-7", "homeRecord": "6-3", "awayRecord": "3-4", "score": null, "last5": "LWLWL", "restDays": 0, "b2b": true },
+  "odds": {
+    "provider": "consensus",
+    "spreadHome": -6.5, "total": 231.5, "mlHome": -250, "mlAway": 205,
+    "open": { "spreadHome": -5.5, "total": 229.5, "mlHome": -220, "mlAway": 182 },
+    "books": [
+      { "name": "DraftKings", "mlHome": -250, "mlAway": 205, "spreadHome": -6.5, "total": 231.5, "noVigHome": 0.693 },
+      { "name": "FanDuel", "mlHome": -245, "mlAway": 200, "spreadHome": -6.5, "total": 232.0, "noVigHome": 0.689 }
+    ],
+    "history": [
+      { "at": "2026-11-22T14:00:00Z", "spreadHome": -5.5, "total": 229.5, "noVigHome": 0.672 },
+      { "at": "2026-11-22T16:40:00Z", "spreadHome": -6.5, "total": 231.5, "noVigHome": 0.691 }
+    ]
+  },
+  "injuries": [
+    { "team": "DEN", "name": "Jamal Murray", "id": "3936299", "status": "Questionable", "detail": "Left hamstring tightness", "returnDate": null },
+    { "team": "LAL", "name": "Anthony Davis", "id": "6583", "status": "Doubtful", "detail": "Left foot soreness", "returnDate": null },
+    { "team": "LAL", "name": "Jarred Vanderbilt", "id": "4278129", "status": "Out", "detail": "Right knee", "returnDate": "2026-12-01" }
+  ],
+  "officials": [],
+  "h2h": { "games": [ { "date": "2026-02-12", "winner": "DEN", "score": "122-109", "n": 1 }, { "date": "2025-11-14", "winner": "LAL", "score": "118-115", "n": 2 } ], "note": "Split last 2" },
+  "analysis": {
+    "wp": { "headline": 0.684, "model": 0.652, "market": 0.691, "lambda": 0.35, "disagree": false, "disagreeSD": 0.8, "range": [0.62, 0.74], "inferredRange": [0.6, 0.76] },
+    "margin": { "mean": 5.8, "sd": 12.6, "q": { "p10": -10.3, "p25": -2.7, "p50": 5.9, "p75": 14.3, "p90": 21.9 } },
+    "total": { "mean": 229.4, "sd": 17.8, "q": { "p10": 206.6, "p25": 217.4, "p50": 229.3, "p75": 241.2, "p90": 252.3 } },
+    "pts": { "home": 117.6, "away": 111.8 },
+    "poss": 99.7,
+    "pOT": 0.058,
+    "cover": { "line": -6.5, "pHome": 0.478 },
+    "over": { "line": 231.5, "p": 0.453 },
+    "ratings": {
+      "home": { "player": 6.1, "results": 4.4, "net": 5.4, "off": 119.8, "def": 114.4, "sd": 2.1 },
+      "away": { "player": 1.9, "results": -0.6, "net": 0.8, "off": 115.2, "def": 114.4, "sd": 2.4 }
+    },
+    "context": [
+      { "key": "hca", "label": "Home court", "value": 2.3, "effect": 2.3, "inModel": true },
+      { "key": "altitude", "label": "Altitude", "value": "5,280 ft", "effect": 0.9, "inModel": true },
+      { "key": "rest", "label": "Rest gap (LAL on back-to-back)", "value": 2, "effect": 1.4, "inModel": true },
+      { "key": "travel", "label": "LAL travel last 72h", "value": "1,020 mi", "effect": 0.3, "inModel": false }
+    ],
+    "scenarios": [
+      { "key": "all-in", "prob": 0.164, "out": [], "wpHome": 0.661, "margin": 4.9, "total": 231.2 },
+      { "key": "murray-out", "prob": 0.096, "out": ["Jamal Murray"], "wpHome": 0.598, "margin": 2.6, "total": 228.1 },
+      { "key": "davis-out", "prob": 0.476, "out": ["Anthony Davis"], "wpHome": 0.731, "margin": 7.7, "total": 230.0 },
+      { "key": "both-out", "prob": 0.264, "out": ["Jamal Murray", "Anthony Davis"], "wpHome": 0.675, "margin": 5.4, "total": 226.9 }
+    ],
+    "ifPanels": [
+      { "player": "Jamal Murray", "team": "DEN", "pPlay": 0.63, "marketImpliedPlay": 0.71,
+        "plays": { "wpHome": 0.712, "margin": 6.9, "total": 230.6 },
+        "sits": { "wpHome": 0.634, "margin": 3.9, "total": 227.4 },
+        "delta": { "wp": -0.078, "spread": 3.0, "total": -3.2 },
+        "teammates": [
+          { "name": "Russell Westbrook", "dMin": 9.4, "dPts": 5.1, "dReb": 1.8, "dAst": 2.6, "dUsg": 2.2 },
+          { "name": "Christian Braun", "dMin": 6.1, "dPts": 3.0, "dReb": 1.1, "dAst": 0.7, "dUsg": 1.4 },
+          { "name": "Nikola Jokic", "dMin": 1.2, "dPts": 2.4, "dReb": 0.3, "dAst": 0.8, "dUsg": 3.1 }
+        ] },
+      { "player": "Anthony Davis", "team": "LAL", "pPlay": 0.26, "marketImpliedPlay": 0.22,
+        "plays": { "wpHome": 0.638, "margin": 4.2, "total": 231.4 },
+        "sits": { "wpHome": 0.709, "margin": 6.8, "total": 228.6 },
+        "delta": { "wp": 0.071, "spread": -2.6, "total": -2.8 },
+        "teammates": [
+          { "name": "Jaxson Hayes", "dMin": 11.8, "dPts": 4.6, "dReb": 4.2, "dAst": 0.4, "dUsg": 1.1 },
+          { "name": "LeBron James", "dMin": 1.6, "dPts": 3.2, "dReb": 1.4, "dAst": 0.6, "dUsg": 3.8 },
+          { "name": "Rui Hachimura", "dMin": 4.3, "dPts": 2.7, "dReb": 1.2, "dAst": 0.2, "dUsg": 1.6 }
+        ] }
+    ],
+    "bothSit": [
+      { "team": "both", "players": ["Jamal Murray", "Anthony Davis"], "prob": 0.274, "wpHome": 0.675, "margin": 5.4, "total": 226.9 }
+    ],
+    "players": [
+      { "id": "3112335", "name": "Nikola Jokic", "team": "DEN", "pos": "C", "starter": true, "status": "Active", "pPlay": 0.99,
+        "min": { "mean": 35.6, "p10": 31.2, "p90": 39.4, "base": 35.0, "blowoutAdj": -0.8, "foulRisk": 0.07, "returnCap": null },
+        "proj": { "pts": { "mean": 28.4, "p10": 19.6, "p90": 37.8 }, "reb": { "mean": 12.9, "p10": 8.1, "p90": 17.7 }, "ast": { "mean": 10.2, "p10": 6.0, "p90": 14.6 }, "fg3m": { "mean": 1.4, "p10": 0.0, "p90": 3.2 }, "pra": { "mean": 51.5, "p10": 39.8, "p90": 63.4 } },
+        "props": { "pts": { "line": 27.5 }, "reb": { "line": 12.5 }, "ast": { "line": 9.5 } },
+        "rates": { "usg": 30.8, "ts": 0.664, "fg3pct": 0.391, "fg3pctShrunk": 0.362, "ast36": 10.3, "reb36": 13.0 },
+        "form": { "season": { "pts": 28.9, "reb": 12.6, "ast": 10.1, "min": 35.2, "n": 16 }, "decayed": { "pts": 29.6, "reb": 13.1, "ast": 10.4, "min": 35.5 } },
+        "splits": [ { "key": "home", "label": "Home", "n": 8, "raw": 2.4, "shrunk": 0.6, "inProjection": false, "why": "n=8, shrunk 75%" } ],
+        "confidence": { "score": 84, "grade": "A-" } },
+      { "id": "3936299", "name": "Jamal Murray", "team": "DEN", "pos": "PG", "starter": true, "status": "Questionable", "pPlay": 0.63,
+        "min": { "mean": 33.1, "p10": 27.0, "p90": 36.8, "base": 34.4, "blowoutAdj": -0.6, "foulRisk": 0.05, "returnCap": null },
+        "proj": { "pts": { "mean": 21.2, "p10": 12.4, "p90": 31.0 }, "reb": { "mean": 4.1, "p10": 1.8, "p90": 6.9 }, "ast": { "mean": 6.3, "p10": 3.1, "p90": 9.8 }, "fg3m": { "mean": 2.6, "p10": 0.7, "p90": 4.8 }, "pra": { "mean": 31.6, "p10": 20.2, "p90": 43.1 } },
+        "rates": { "usg": 26.1, "ts": 0.584, "fg3pct": 0.402, "fg3pctShrunk": 0.371, "ast36": 6.8, "reb36": 4.4 },
+        "form": { "season": { "pts": 21.7, "reb": 4.0, "ast": 6.4, "min": 34.0, "n": 15 }, "decayed": { "pts": 20.9, "reb": 4.2, "ast": 6.1, "min": 33.6 } },
+        "splits": [], "confidence": { "score": 61, "grade": "C+" } },
+      { "id": "3468", "name": "Russell Westbrook", "team": "DEN", "pos": "PG", "starter": false, "status": "Active", "pPlay": 0.98,
+        "min": { "mean": 25.8, "p10": 18.4, "p90": 33.1, "base": 21.6, "blowoutAdj": 0.4, "foulRisk": 0.16, "returnCap": null },
+        "proj": { "pts": { "mean": 12.9, "p10": 6.2, "p90": 20.4 }, "reb": { "mean": 5.6, "p10": 2.4, "p90": 9.1 }, "ast": { "mean": 6.0, "p10": 2.7, "p90": 9.6 }, "fg3m": { "mean": 0.9, "p10": 0.0, "p90": 2.3 }, "pra": { "mean": 24.5, "p10": 14.1, "p90": 35.6 } },
+        "rates": { "usg": 24.0, "ts": 0.531, "fg3pct": 0.318, "fg3pctShrunk": 0.327, "ast36": 8.4, "reb36": 7.8 },
+        "form": { "season": { "pts": 11.2, "reb": 5.1, "ast": 5.4, "min": 22.1, "n": 16 }, "decayed": { "pts": 12.0, "reb": 5.4, "ast": 5.7, "min": 22.8 } },
+        "splits": [], "confidence": { "score": 66, "grade": "B-" } },
+      { "id": "1966", "name": "LeBron James", "team": "LAL", "pos": "SF", "starter": true, "status": "Active", "pPlay": 0.97,
+        "min": { "mean": 34.8, "p10": 30.1, "p90": 38.6, "base": 33.9, "blowoutAdj": -1.1, "foulRisk": 0.04, "returnCap": null },
+        "proj": { "pts": { "mean": 25.7, "p10": 17.0, "p90": 34.9 }, "reb": { "mean": 7.6, "p10": 4.2, "p90": 11.3 }, "ast": { "mean": 8.4, "p10": 4.9, "p90": 12.2 }, "fg3m": { "mean": 2.1, "p10": 0.5, "p90": 4.0 }, "pra": { "mean": 41.7, "p10": 30.3, "p90": 53.6 } },
+        "props": { "pts": { "line": 24.5 } },
+        "rates": { "usg": 30.2, "ts": 0.612, "fg3pct": 0.381, "fg3pctShrunk": 0.364, "ast36": 8.7, "reb36": 7.9 },
+        "form": { "season": { "pts": 24.9, "reb": 7.4, "ast": 8.1, "min": 33.7, "n": 16 }, "decayed": { "pts": 25.3, "reb": 7.7, "ast": 8.6, "min": 34.1 } },
+        "splits": [ { "key": "b2b", "label": "Back-to-back", "n": 3, "raw": -4.1, "shrunk": -0.5, "inProjection": false, "why": "n=3" } ],
+        "confidence": { "score": 78, "grade": "B+" } },
+      { "id": "4066648", "name": "Austin Reaves", "team": "LAL", "pos": "SG", "starter": true, "status": "Active", "pPlay": 0.99,
+        "min": { "mean": 34.2, "p10": 29.5, "p90": 38.0, "base": 33.6, "blowoutAdj": -0.9, "foulRisk": 0.06, "returnCap": null },
+        "proj": { "pts": { "mean": 19.8, "p10": 11.9, "p90": 28.6 }, "reb": { "mean": 4.6, "p10": 2.1, "p90": 7.4 }, "ast": { "mean": 5.9, "p10": 2.9, "p90": 9.2 }, "fg3m": { "mean": 2.7, "p10": 0.8, "p90": 5.0 }, "pra": { "mean": 30.3, "p10": 20.0, "p90": 41.2 } },
+        "rates": { "usg": 23.4, "ts": 0.603, "fg3pct": 0.372, "fg3pctShrunk": 0.361, "ast36": 6.2, "reb36": 4.8 },
+        "form": { "season": { "pts": 19.1, "reb": 4.5, "ast": 5.7, "min": 33.4, "n": 16 }, "decayed": { "pts": 19.6, "reb": 4.7, "ast": 6.0, "min": 33.9 } },
+        "splits": [], "confidence": { "score": 75, "grade": "B" } },
+      { "id": "4397002", "name": "Jaxson Hayes", "team": "LAL", "pos": "C", "starter": false, "status": "Active", "pPlay": 0.97,
+        "min": { "mean": 24.9, "p10": 15.2, "p90": 31.6, "base": 16.1, "blowoutAdj": 0.5, "foulRisk": 0.22, "returnCap": null },
+        "proj": { "pts": { "mean": 9.8, "p10": 4.0, "p90": 16.2 }, "reb": { "mean": 7.4, "p10": 3.6, "p90": 11.5 }, "ast": { "mean": 1.1, "p10": 0.0, "p90": 2.6 }, "fg3m": { "mean": 0.0, "p10": 0.0, "p90": 0.0 }, "pra": { "mean": 18.3, "p10": 9.6, "p90": 27.4 } },
+        "rates": { "usg": 15.1, "ts": 0.701, "fg3pct": 0.0, "fg3pctShrunk": 0.12, "ast36": 1.6, "reb36": 10.7 },
+        "form": { "season": { "pts": 6.1, "reb": 4.9, "ast": 0.8, "min": 16.0, "n": 14 }, "decayed": { "pts": 6.6, "reb": 5.3, "ast": 0.9, "min": 16.8 } },
+        "splits": [], "confidence": { "score": 52, "grade": "C" } },
+      { "id": "4432158", "name": "Christian Braun", "team": "DEN", "pos": "SG", "starter": true, "status": "Active", "pPlay": 0.99, "gamesMissed": 4,
+        "min": { "mean": 26.4, "p10": 20.3, "p90": 29.0, "base": 31.2, "blowoutAdj": -0.4, "foulRisk": 0.09, "returnCap": 28 },
+        "proj": { "pts": { "mean": 11.6, "p10": 5.8, "p90": 18.1 }, "reb": { "mean": 4.8, "p10": 2.2, "p90": 7.7 }, "ast": { "mean": 2.3, "p10": 0.6, "p90": 4.4 }, "fg3m": { "mean": 1.1, "p10": 0.0, "p90": 2.6 }, "pra": { "mean": 18.7, "p10": 10.6, "p90": 27.0 } },
+        "rates": { "usg": 16.8, "ts": 0.611, "fg3pct": 0.352, "fg3pctShrunk": 0.349, "ast36": 2.9, "reb36": 5.9 },
+        "form": { "season": { "pts": 13.0, "reb": 5.0, "ast": 2.4, "min": 31.0, "n": 12 }, "decayed": { "pts": 12.4, "reb": 4.9, "ast": 2.3, "min": 30.2 } },
+        "splits": [], "confidence": { "score": 58, "grade": "C+" } }
+    ],
+    "confidence": { "score": 71, "grade": "B", "terms": { "param": 0.82, "inj": 0.61, "disagree": 0.9, "data": 0.88, "calib": 0.7, "role": 0.74 } },
+    "swing": [
+      { "variable": "Jamal Murray status", "dWp": -0.078, "dTotal": -3.2, "note": "Questionable, 63% to play" },
+      { "variable": "Anthony Davis status", "dWp": 0.071, "dTotal": -2.8, "note": "Doubtful, 26% to play" },
+      { "variable": "LAL back-to-back fatigue term", "dWp": 0.021, "dTotal": -1.1, "note": "rest gap 2 days" },
+      { "variable": "Altitude term", "dWp": 0.018, "dTotal": 0.4, "note": "5280 ft" },
+      { "variable": "Pace prior", "dWp": 0.004, "dTotal": 2.6, "note": "99.7 possessions" }
+    ],
+    "factors": [
+      { "key": "hca", "label": "Home court", "value": 2.3, "inModel": true },
+      { "key": "altitude", "label": "Altitude", "value": 0.9, "inModel": true },
+      { "key": "rest", "label": "Rest gap", "value": 1.4, "inModel": true }
+    ]
+  },
+  "narrative": { "paras": [], "source": "rules" },
+  "reasoning": [],
+  "dataAgeSec": 412
+}

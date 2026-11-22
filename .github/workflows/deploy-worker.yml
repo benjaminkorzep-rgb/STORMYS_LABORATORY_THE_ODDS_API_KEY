@@ -1,0 +1,16 @@
+# Deploys Writer A with wrangler. Needs repo secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
+name: deploy-worker
+on:
+  workflow_dispatch: {}
+  # push trigger off: needs CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID repo secrets (set in GitHub settings, never in chat)
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: rm -rf site/core && cp -r core site/core
+      - run: npx --yes wrangler@4 deploy --config worker/wrangler.toml
+        env: { CLOUDFLARE_API_TOKEN: "${{ secrets.CLOUDFLARE_API_TOKEN }}", CLOUDFLARE_ACCOUNT_ID: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" }

@@ -1,0 +1,382 @@
+{
+ "ATL": {
+  "abbr": "ATL",
+  "city": "Atlanta",
+  "name": "Hawks",
+  "arena": "State Farm Arena",
+  "altFt": 1050,
+  "tz": "America/New_York",
+  "lat": 33.757,
+  "lon": -84.396
+ },
+ "BOS": {
+  "abbr": "BOS",
+  "city": "Boston",
+  "name": "Celtics",
+  "arena": "TD Garden",
+  "altFt": 20,
+  "tz": "America/New_York",
+  "lat": 42.366,
+  "lon": -71.062
+ },
+ "BKN": {
+  "abbr": "BKN",
+  "city": "Brooklyn",
+  "name": "Nets",
+  "arena": "Barclays Center",
+  "altFt": 30,
+  "tz": "America/New_York",
+  "lat": 40.683,
+  "lon": -73.975
+ },
+ "CHA": {
+  "abbr": "CHA",
+  "city": "Charlotte",
+  "name": "Hornets",
+  "arena": "Spectrum Center",
+  "altFt": 750,
+  "tz": "America/New_York",
+  "lat": 35.225,
+  "lon": -80.839
+ },
+ "CHI": {
+  "abbr": "CHI",
+  "city": "Chicago",
+  "name": "Bulls",
+  "arena": "United Center",
+  "altFt": 595,
+  "tz": "America/Chicago",
+  "lat": 41.881,
+  "lon": -87.674
+ },
+ "CLE": {
+  "abbr": "CLE",
+  "city": "Cleveland",
+  "name": "Cavaliers",
+  "arena": "Rocket Arena",
+  "altFt": 650,
+  "tz": "America/New_York",
+  "lat": 41.497,
+  "lon": -81.688
+ },
+ "DAL": {
+  "abbr": "DAL",
+  "city": "Dallas",
+  "name": "Mavericks",
+  "arena": "American Airlines Center",
+  "altFt": 430,
+  "tz": "America/Chicago",
+  "lat": 32.79,
+  "lon": -96.81
+ },
+ "DEN": {
+  "abbr": "DEN",
+  "city": "Denver",
+  "name": "Nuggets",
+  "arena": "Ball Arena",
+  "altFt": 5280,
+  "tz": "America/Denver",
+  "lat": 39.749,
+  "lon": -105.008
+ },
+ "DET": {
+  "abbr": "DET",
+  "city": "Detroit",
+  "name": "Pistons",
+  "arena": "Little Caesars Arena",
+  "altFt": 600,
+  "tz": "America/Detroit",
+  "lat": 42.341,
+  "lon": -83.055
+ },
+ "GS": {
+  "abbr": "GS",
+  "city": "Golden State",
+  "name": "Warriors",
+  "arena": "Chase Center",
+  "altFt": 10,
+  "tz": "America/Los_Angeles",
+  "lat": 37.768,
+  "lon": -122.388
+ },
+ "HOU": {
+  "abbr": "HOU",
+  "city": "Houston",
+  "name": "Rockets",
+  "arena": "Toyota Center",
+  "altFt": 50,
+  "tz": "America/Chicago",
+  "lat": 29.751,
+  "lon": -95.362
+ },
+ "IND": {
+  "abbr": "IND",
+  "city": "Indiana",
+  "name": "Pacers",
+  "arena": "Gainbridge Fieldhouse",
+  "altFt": 715,
+  "tz": "America/Indiana/Indianapolis",
+  "lat": 39.764,
+  "lon": -86.156
+ },
+ "LAC": {
+  "abbr": "LAC",
+  "city": "LA",
+  "name": "Clippers",
+  "arena": "Intuit Dome",
+  "altFt": 100,
+  "tz": "America/Los_Angeles",
+  "lat": 33.945,
+  "lon": -118.343
+ },
+ "LAL": {
+  "abbr": "LAL",
+  "city": "Los Angeles",
+  "name": "Lakers",
+  "arena": "Crypto.com Arena",
+  "altFt": 300,
+  "tz": "America/Los_Angeles",
+  "lat": 34.043,
+  "lon": -118.267
+ },
+ "MEM": {
+  "abbr": "MEM",
+  "city": "Memphis",
+  "name": "Grizzlies",
+  "arena": "FedExForum",
+  "altFt": 260,
+  "tz": "America/Chicago",
+  "lat": 35.138,
+  "lon": -90.051
+ },
+ "MIA": {
+  "abbr": "MIA",
+  "city": "Miami",
+  "name": "Heat",
+  "arena": "Kaseya Center",
+  "altFt": 10,
+  "tz": "America/New_York",
+  "lat": 25.781,
+  "lon": -80.188
+ },
+ "MIL": {
+  "abbr": "MIL",
+  "city": "Milwaukee",
+  "name": "Bucks",
+  "arena": "Fiserv Forum",
+  "altFt": 600,
+  "tz": "America/Chicago",
+  "lat": 43.045,
+  "lon": -87.917
+ },
+ "MIN": {
+  "abbr": "MIN",
+  "city": "Minnesota",
+  "name": "Timberwolves",
+  "arena": "Target Center",
+  "altFt": 830,
+  "tz": "America/Chicago",
+  "lat": 44.98,
+  "lon": -93.276
+ },
+ "NO": {
+  "abbr": "NO",
+  "city": "New Orleans",
+  "name": "Pelicans",
+  "arena": "Smoothie King Center",
+  "altFt": 5,
+  "tz": "America/Chicago",
+  "lat": 29.949,
+  "lon": -90.082
+ },
+ "NY": {
+  "abbr": "NY",
+  "city": "New York",
+  "name": "Knicks",
+  "arena": "Madison Square Garden",
+  "altFt": 30,
+  "tz": "America/New_York",
+  "lat": 40.751,
+  "lon": -73.993
+ },
+ "OKC": {
+  "abbr": "OKC",
+  "city": "Oklahoma City",
+  "name": "Thunder",
+  "arena": "Paycom Center",
+  "altFt": 1200,
+  "tz": "America/Chicago",
+  "lat": 35.463,
+  "lon": -97.515
+ },
+ "ORL": {
+  "abbr": "ORL",
+  "city": "Orlando",
+  "name": "Magic",
+  "arena": "Kia Center",
+  "altFt": 100,
+  "tz": "America/New_York",
+  "lat": 28.539,
+  "lon": -81.384
+ },
+ "PHI": {
+  "abbr": "PHI",
+  "city": "Philadelphia",
+  "name": "76ers",
+  "arena": "Wells Fargo Center",
+  "altFt": 40,
+  "tz": "America/New_York",
+  "lat": 39.901,
+  "lon": -75.172
+ },
+ "PHX": {
+  "abbr": "PHX",
+  "city": "Phoenix",
+  "name": "Suns",
+  "arena": "Footprint Center",
+  "altFt": 1100,
+  "tz": "America/Phoenix",
+  "lat": 33.446,
+  "lon": -112.071
+ },
+ "POR": {
+  "abbr": "POR",
+  "city": "Portland",
+  "name": "Trail Blazers",
+  "arena": "Moda Center",
+  "altFt": 50,
+  "tz": "America/Los_Angeles",
+  "lat": 45.532,
+  "lon": -122.667
+ },
+ "SAC": {
+  "abbr": "SAC",
+  "city": "Sacramento",
+  "name": "Kings",
+  "arena": "Golden 1 Center",
+  "altFt": 30,
+  "tz": "America/Los_Angeles",
+  "lat": 38.58,
+  "lon": -121.5
+ },
+ "SA": {
+  "abbr": "SA",
+  "city": "San Antonio",
+  "name": "Spurs",
+  "arena": "Frost Bank Center",
+  "altFt": 650,
+  "tz": "America/Chicago",
+  "lat": 29.427,
+  "lon": -98.437
+ },
+ "TOR": {
+  "abbr": "TOR",
+  "city": "Toronto",
+  "name": "Raptors",
+  "arena": "Scotiabank Arena",
+  "altFt": 250,
+  "tz": "America/Toronto",
+  "lat": 43.643,
+  "lon": -79.379
+ },
+ "UTAH": {
+  "abbr": "UTAH",
+  "city": "Utah",
+  "name": "Jazz",
+  "arena": "Delta Center",
+  "altFt": 4300,
+  "tz": "America/Denver",
+  "lat": 40.768,
+  "lon": -111.901
+ },
+ "WSH": {
+  "abbr": "WSH",
+  "city": "Washington",
+  "name": "Wizards",
+  "arena": "Capital One Arena",
+  "altFt": 30,
+  "tz": "America/New_York",
+  "lat": 38.898,
+  "lon": -77.021
+ },
+ "UTA": {
+  "abbr": "UTA",
+  "city": "Utah",
+  "name": "Jazz",
+  "arena": "Delta Center",
+  "altFt": 4300,
+  "tz": "America/Denver",
+  "lat": 40.768,
+  "lon": -111.901
+ },
+ "GSW": {
+  "abbr": "GSW",
+  "city": "Golden State",
+  "name": "Warriors",
+  "arena": "Chase Center",
+  "altFt": 10,
+  "tz": "America/Los_Angeles",
+  "lat": 37.768,
+  "lon": -122.388
+ },
+ "NOP": {
+  "abbr": "NOP",
+  "city": "New Orleans",
+  "name": "Pelicans",
+  "arena": "Smoothie King Center",
+  "altFt": 5,
+  "tz": "America/Chicago",
+  "lat": 29.949,
+  "lon": -90.082
+ },
+ "NYK": {
+  "abbr": "NYK",
+  "city": "New York",
+  "name": "Knicks",
+  "arena": "Madison Square Garden",
+  "altFt": 30,
+  "tz": "America/New_York",
+  "lat": 40.751,
+  "lon": -73.993
+ },
+ "SAS": {
+  "abbr": "SAS",
+  "city": "San Antonio",
+  "name": "Spurs",
+  "arena": "Frost Bank Center",
+  "altFt": 650,
+  "tz": "America/Chicago",
+  "lat": 29.427,
+  "lon": -98.437
+ },
+ "WAS": {
+  "abbr": "WAS",
+  "city": "Washington",
+  "name": "Wizards",
+  "arena": "Capital One Arena",
+  "altFt": 30,
+  "tz": "America/New_York",
+  "lat": 38.898,
+  "lon": -77.021
+ },
+ "PHO": {
+  "abbr": "PHO",
+  "city": "Phoenix",
+  "name": "Suns",
+  "arena": "Footprint Center",
+  "altFt": 1100,
+  "tz": "America/Phoenix",
+  "lat": 33.446,
+  "lon": -112.071
+ },
+ "BRK": {
+  "abbr": "BRK",
+  "city": "Brooklyn",
+  "name": "Nets",
+  "arena": "Barclays Center",
+  "altFt": 30,
+  "tz": "America/New_York",
+  "lat": 40.683,
+  "lon": -73.975
+ }
+}

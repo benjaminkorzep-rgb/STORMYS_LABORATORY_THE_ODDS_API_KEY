@@ -1,0 +1,20 @@
+# Nightly batch (§1): time-boxed history backfill, rating refits, backtest report. Commits data-cache (also keeps the repo active).
+name: nightly
+on:
+  schedule: [{ cron: "13 9 * * *" }]   # 04:13 ET (EST)
+  workflow_dispatch: {}
+permissions: { contents: write }
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node engine/nightly.mjs
+        env: { BACKFILL_MINUTES: "40" }
+      - run: |
+          git config user.name "nightly-bot" && git config user.email "nightly@users.noreply.github.com"
+          git add data-cache site/method engine/backtest-results.json 2>/dev/null || true
+          git commit -m "nightly: backfill + refit $(date -u +%F)" && git push || echo "no changes"
