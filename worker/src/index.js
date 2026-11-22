@@ -5,6 +5,8 @@
 import { lightRefresh, buildSnapshot } from '../../core/snapshot.js';
 import { slateDateET } from '../../core/normalize.js';
 import { sendPush } from './push.js';
+import { FILES } from './static.js';
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 
 const PAGES = 'https://benjaminkorzep-rgb.github.io/STORMYS_LABORATORY_THE_ODDS_API_KEY/data/latest.json';
 const RAW = 'https://raw.githubusercontent.com/benjaminkorzep-rgb/STORMYS_LABORATORY_THE_ODDS_API_KEY/snapshot-data/latest.json';
@@ -94,6 +96,9 @@ export default {
       await env.SNAP.put('sub:' + id, JSON.stringify({ endpoint: sub.endpoint, at: new Date().toISOString() }), { expirationTtl: 90 * 86400 });
       return json({ ok: true, id });
     }
+    const path = url.pathname.endsWith('/') ? url.pathname + 'index.html' : url.pathname;
+    const f = FILES[path];
+    if (f) return new Response(b64(f[1]), { headers: { 'content-type': f[0], 'cache-control': /\/(sw|index)\.|config\.json/.test(path) ? 'no-cache' : 'max-age=300' } });
     if (env.ASSETS) return env.ASSETS.fetch(req);
     return Response.redirect(PAGES.replace('data/latest.json', '') + url.pathname.replace(/^\//, '') + url.search, 302);
   },

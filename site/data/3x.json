@@ -1,0 +1,36 @@
+{
+ "title": "3\u00d7 check (PART 8): per-game counts",
+ "rows": [
+  {
+   "page": "Covers matchup (Stats+Picks+Odds tabs)",
+   "modules": 22,
+   "data points": "~590 visible / ~650 addressable"
+  },
+  {
+   "page": "Action Network game page",
+   "modules": 16,
+   "data points": "~215 visible"
+  },
+  {
+   "page": "ESPN Gamecast pre-game",
+   "modules": 6,
+   "data points": "~97"
+  },
+  {
+   "page": "Rotowire lineups card",
+   "modules": 9,
+   "data points": "~55"
+  },
+  {
+   "page": "Dimers prediction article",
+   "modules": 7,
+   "data points": "~43"
+  },
+  {
+   "page": "This app (per game, live snapshot 2026-11-22 21:39 UTC)",
+   "modules": 38,
+   "data points": "3840\u20134162 (counted leaves)"
+  }
+ ],
+ "note": "Data points: 3840 \u00f7 650 = 5.9\u00d7 the largest competitor \u2192 PASS. Modules: 38 \u00f7 22 = 1.7\u00d7 \u2192 NOT 3\u00d7 (FAIL). Trend cards exist but carry no scored trends yet (backtest pending), so they are not counted."
+}
