@@ -1,0 +1,10 @@
+probe at 2026-11-28T13:18:36.244Z from GitHub Actions runner
+200	251802B	157ms	espn site.api scoreboard
+200	251802B	422ms	espn site.web.api scoreboard
+200	420725B	276ms	espn cdn scoreboard
+200	1123794B	43ms	espn injuries
+200	35146B	192ms	cdn.nba.com todaysScoreboard (chrome)
+200	85097B	136ms	cdn.nba.com odds (chrome)
+200	11614B	106ms	stats.nba.com daily lineups (chrome)
+200	216856B	318ms	official injury report index
+200	93102B	215ms	actionnetwork scoreboard
